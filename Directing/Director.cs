@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using Byui.Games.Scripting;
-using Byui.Games.Services;
+using CSE210_Final.Scripting;
+using CSE210_Final.Services;
+using Action = CSE210_Final.Scripting.Action;
 
-namespace Byui.Games.Directing
+namespace CSE210_Final.Directing
 {
     /// <summary>
     /// Controls the sequence and pacing of the game.
@@ -60,8 +61,8 @@ namespace Byui.Games.Directing
         private void DoActions(int phase, Scene scene)
         {
             float deltaTime = _videoService.GetDeltaTime();
-            List<Action> actions = scene.GetAllActions(phase);
-            foreach(Action action in actions)
+            List<Scripting.Action> actions = scene.GetAllActions(phase);
+            foreach(Scripting.Action action in actions)
             {
                 action.Execute(scene, deltaTime, this);
             }

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Byui.Games.Casting;
+using CSE210_Final.Casting;
 
 
-namespace Byui.Games.Scripting
+namespace CSE210_Final.Scripting
 {
     /// <summary>
     /// The current state of the game.

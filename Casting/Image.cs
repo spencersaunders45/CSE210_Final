@@ -1,7 +1,7 @@
 using System;
 
 
-namespace CSEFinal.Casting
+namespace CSE210_Final.Casting
 {
     /// <summary>
     /// A visible Actor.

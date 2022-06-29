@@ -1,7 +1,7 @@
 using System;
 
 
-namespace Byui.Games.Scripting 
+namespace CSE210_Final.Scripting 
 {
     /// <summary>
     /// Receives action events.

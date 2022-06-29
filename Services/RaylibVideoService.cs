@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
-using Byui.Games.Casting;
+using CSE210_Final.Casting;
 using Raylib_cs;
 
 
-namespace Byui.Games.Services
+namespace CSE210_Final.Services
 {
     public class RaylibVideoService : IVideoService
     {

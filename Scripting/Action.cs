@@ -1,4 +1,4 @@
-namespace Byui.Games.Scripting
+namespace CSE210_Final.Scripting
 {
     /// <summary>
     /// A thing that is done in the game.

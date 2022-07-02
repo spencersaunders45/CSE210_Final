@@ -21,7 +21,6 @@ namespace CSE210_Final
       public static int FIELD_RIGHT = SCREEN_WIDTH;
 
       // FONT
-      
 
       // SOUND
 
@@ -31,7 +30,7 @@ namespace CSE210_Final
 
       // KEYS
 
-      
+      // MAP
 
    }
 }

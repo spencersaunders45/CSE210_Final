@@ -21,7 +21,9 @@ namespace CSE210_Final.Game.Scripting
             try
             {
                 PlayerController player = scene.GetFirstActor<PlayerController>("player");
+                List<Skeleton> allSkeletons = scene.GetAllActors<Skeleton>("skeleton");
                 _videoService.ClearBuffer();
+                allSkeletons.ForEach(DrawSkeletons);
                 _videoService.Draw(player);
                 _videoService.FlushBuffer();
             }
@@ -29,6 +31,11 @@ namespace CSE210_Final.Game.Scripting
             {
                 callback.OnError("Couldn't draw actors.", exception);
             }
+        }
+
+        private void DrawSkeletons(Skeleton skeleton)
+        {
+            _videoService.Draw(skeleton);
         }
     }
 }

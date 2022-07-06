@@ -22,8 +22,10 @@ namespace CSE210_Final.Game.Scripting
             {
                 PlayerController player = scene.GetFirstActor<PlayerController>("player");
                 List<Skeleton> allSkeletons = scene.GetAllActors<Skeleton>("skeleton");
+                Skeleton boss = scene.GetFirstActor<Skeleton>("boss");
                 _videoService.ClearBuffer();
                 allSkeletons.ForEach(DrawSkeletons);
+                _videoService.Draw(boss);
                 _videoService.Draw(player);
                 _videoService.FlushBuffer();
             }

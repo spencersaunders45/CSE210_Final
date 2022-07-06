@@ -16,20 +16,20 @@ public static class Program
 
         //-------------------Testing-------------------
         serviceFactory.GetVideoService().SetBackground(Color.Black());
-        PlayerController playerController = new PlayerController(Vector2.One * 100, Vector2.One * 30, Color.Green());
+        PlayerController playerController = new PlayerController(Vector2.One * 100, Vector2.One * 16, Color.Blue());
         testScene.AddActor("player" , playerController);
         //-------------------End testing-------------------
 
         // Actors
-        Skeleton boss = new Skeleton(Vector2.One * 0, Vector2.One * 5, Color.Green());
-        Skeleton skeleton1 = new Skeleton(Vector2.One * 10, Vector2.One * 5, Color.Green());
-        Skeleton skeleton2 = new Skeleton(Vector2.One * 20, Vector2.One * 5, Color.Green());
-        Skeleton skeleton3 = new Skeleton(Vector2.One * 30, Vector2.One * 5, Color.Green());
-        Skeleton skeleton4 = new Skeleton(Vector2.One * 40, Vector2.One * 5, Color.Green());
-        Skeleton skeleton5 = new Skeleton(Vector2.One * 50, Vector2.One * 5, Color.Green());
-        Skeleton skeleton6 = new Skeleton(Vector2.One * 60, Vector2.One * 5, Color.Green());
-        Skeleton skeleton7 = new Skeleton(Vector2.One * 70, Vector2.One * 5, Color.Green());
-        Skeleton skeleton8 = new Skeleton(Vector2.One * 80, Vector2.One * 5, Color.Green());
+        Skeleton boss = new Skeleton(500, 340, Vector2.One * 24, Color.Red());
+        Skeleton skeleton1 = new Skeleton(0, 0, Vector2.One * 16, Color.Green());
+        Skeleton skeleton2 = new Skeleton(20, 0, Vector2.One * 16, Color.Green());
+        Skeleton skeleton3 = new Skeleton(40, 0, Vector2.One * 16, Color.Green());
+        Skeleton skeleton4 = new Skeleton(60, 0, Vector2.One * 16, Color.Green());
+        Skeleton skeleton5 = new Skeleton(80, 0, Vector2.One * 16, Color.Green());
+        Skeleton skeleton6 = new Skeleton(100, 0, Vector2.One * 16, Color.Green());
+        Skeleton skeleton7 = new Skeleton(120, 0, Vector2.One * 16, Color.Green());
+        Skeleton skeleton8 = new Skeleton(140, 0, Vector2.One * 16, Color.Green());
         testScene.AddActor("boss" , boss);
         testScene.AddActor("skeleton" , skeleton1);
         testScene.AddActor("skeleton" , skeleton2);

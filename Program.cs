@@ -20,6 +20,8 @@ public static class Program
         testScene.AddActor("player" , playerController);
         //-------------------End testing-------------------
 
+        UpdateActorsAction updateActorsAction = new UpdateActorsAction(serviceFactory);
+        testScene.AddAction(Phase.Input, updateActorsAction);
         DrawActorsAction drawActorsAction = new DrawActorsAction(serviceFactory);
         testScene.AddAction(Phase.Output ,drawActorsAction);
         

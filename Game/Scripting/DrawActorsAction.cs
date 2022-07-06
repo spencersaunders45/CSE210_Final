@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using CSE210_Final.Casting;
-using CSE210_Final.Scripting;
-using CSE210_Final.Services;
+using CSE210_Final.Game.Casting;
+using CSE210_Final.Game.Scripting;
+using CSE210_Final.Game.Services;
 
 
-namespace CSE210_Final.Scripting
+namespace CSE210_Final.Game.Scripting
 {
-    public class DrawActorsAction : CSE210_Final.Scripting.Action
+    public class DrawActorsAction : CSE210_Final.Game.Scripting.Action
     {
         private IVideoService _videoService;
 

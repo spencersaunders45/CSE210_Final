@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace CSE210_Final.Casting;
+namespace CSE210_Final.Game.Casting;
 
 public class PlayerController : Actor
 {

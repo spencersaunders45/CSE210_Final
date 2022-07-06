@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
-using CSE210_Final.Casting;
-using CSE210_Final.Directing;
-using CSE210_Final.Scripting;
-using CSE210_Final.Services;
+using CSE210_Final.Game.Casting;
+using CSE210_Final.Game.Directing;
+using CSE210_Final.Game.Scripting;
+using CSE210_Final.Game.Services;
 
 namespace CSE210_Final;
 

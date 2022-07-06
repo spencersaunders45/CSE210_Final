@@ -16,9 +16,12 @@ public static class Program
 
         //-------------------Testing-------------------
         serviceFactory.GetVideoService().SetBackground(Color.Black());
-        PlayerController playerController = new PlayerController(Vector2.Zero, Vector2.One * 5, Color.Green());
+        PlayerController playerController = new PlayerController(Vector2.One * 100, Vector2.One * 30, Color.Green());
         testScene.AddActor("player" , playerController);
         //-------------------End testing-------------------
+
+        DrawActorsAction drawActorsAction = new DrawActorsAction(serviceFactory);
+        testScene.AddAction(Phase.Output ,drawActorsAction);
         
         Director director = new Director(serviceFactory);
         director.Direct(testScene);

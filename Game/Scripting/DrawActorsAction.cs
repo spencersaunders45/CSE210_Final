@@ -22,12 +22,20 @@ namespace CSE210_Final.Game.Scripting
             {
                 PlayerController player = scene.GetFirstActor<PlayerController>("player");
                 List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
+                List<Label> labels = scene.GetAllActors<Label>("label");
                 _videoService.ClearBuffer();
-                _videoService.Draw(player); // Draw Player
-                foreach (SolidWall wall in walls) // Draw Walls
-                {
-                    _videoService.Draw(wall);
-                }
+                
+                if(player != null)
+                    _videoService.Draw(player); // Draw Player
+                
+                // Draw Walls
+                foreach (SolidWall wall in walls) 
+                { _videoService.Draw(wall); }
+                
+                // Draw Labels
+                foreach (Label label in labels)
+                { _videoService.Draw(label); }
+                
                 _videoService.FlushBuffer();
             }
             catch (Exception exception)

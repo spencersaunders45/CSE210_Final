@@ -20,7 +20,8 @@ public class UpdateActorsAction : CSE210_Final.Game.Scripting.Action
         try
         {
             PlayerController player = scene.GetFirstActor<PlayerController>("player");
-            player.Update(_serviceFactory);
+            if(player != null)
+                player.Update(_serviceFactory);
         }
         catch (Exception exception)
         {

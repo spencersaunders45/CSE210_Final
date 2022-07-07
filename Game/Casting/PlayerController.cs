@@ -31,6 +31,8 @@ public class PlayerController : Actor
         IKeyboardService keyboardService = serviceFactory.GetKeyboardService();
         List<SolidWall> allWalls = _currentScene.GetAllActors<SolidWall>("wall");
         
+        // Loop through every wall in the scene to test collision against.
+        // Vertical Collision
         foreach (SolidWall wall in allWalls) 
         {
             // There are two different spots that get checked for each side in terms of collision
@@ -41,13 +43,27 @@ public class PlayerController : Actor
             botCol = wall.Overlaps(new Vector2(GetLeft() + 2, GetBottom() + 2)) || // Bottom
                      wall.Overlaps(new Vector2(GetRight() - 2, GetBottom() + 2));
 
+            if (topCol || botCol)    // Break the loop if collision is detected.
+                break;                                      /* If this doesn't happen, collision will only work with 
+                                                                the last object in the list. */
+        }
+        // Loop through every wall in the scene to test collision against.
+        //Horizontal Collision
+        foreach (SolidWall wall in allWalls) 
+        {
+            // There are two different spots that get checked for each side in terms of collision
+            // to make collision more precise.
             rightCol = wall.Overlaps(new Vector2(GetRight() + 2, GetTop() + 2)) || // Right
                        wall.Overlaps(new Vector2(GetRight() + 2, GetBottom() - 2));
 
             leftCol = wall.Overlaps(new Vector2(GetLeft() - 2, GetTop() + 2)) || // Left
                       wall.Overlaps(new Vector2(GetLeft() - 2, GetBottom() - 2));
 
+            if (rightCol || leftCol)    // Break the loop if collision is detected.
+                break;                                      /* If this doesn't happen, collision will only work with 
+                                                                the last object in the list. */
         }
+        
         // Vertical
         if (keyboardService.IsKeyDown(KeyboardKey.Down) && !botCol) // Down
             _moveY = _movementSpeed;
@@ -56,7 +72,7 @@ public class PlayerController : Actor
         else
             _moveY = 0;
         
-        // Hoizontal Movement
+        // Horizontal Movement
         if (keyboardService.IsKeyDown(KeyboardKey.Right) && !rightCol) // Right
             _moveX = _movementSpeed;
         else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !leftCol) // Left

@@ -11,4 +11,19 @@
     <PackageReference Include="Raylib-cs" Version="4.0.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Images\Player\Death" />
+    <Folder Include="Assets\Images\Player\Idle" />
+    <Folder Include="Assets\Images\Player\Run" />
+    <Folder Include="Assets\Images\Player\Attack" />
+    <Folder Include="Assets\Images\Skeleton\Death" />
+    <Folder Include="Assets\Images\Skeleton\Idle" />
+    <Folder Include="Assets\Images\Skeleton\Attack" />
+    <Folder Include="Assets\Images\Skeleton\Run" />
+    <Folder Include="Assets\Images\Slime\Death" />
+    <Folder Include="Assets\Images\Slime\Idle" />
+    <Folder Include="Assets\Images\Slime\Jump" />
+    <Folder Include="Assets\Images\World-Tiles" />
+  </ItemGroup>
+
 </Project>

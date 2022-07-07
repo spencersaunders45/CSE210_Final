@@ -21,8 +21,13 @@ namespace CSE210_Final.Game.Scripting
             try
             {
                 PlayerController player = scene.GetFirstActor<PlayerController>("player");
+                List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
                 _videoService.ClearBuffer();
-                _videoService.Draw(player);
+                _videoService.Draw(player); // Draw Player
+                foreach (SolidWall wall in walls) // Draw Walls
+                {
+                    _videoService.Draw(wall);
+                }
                 _videoService.FlushBuffer();
             }
             catch (Exception exception)

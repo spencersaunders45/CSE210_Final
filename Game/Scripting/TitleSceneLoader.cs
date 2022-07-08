@@ -3,6 +3,9 @@ using CSE210_Final.Game.Services;
 
 namespace CSE210_Final.Game.Scripting;
 
+/// <summary>
+/// Handles loading the title scene.
+/// </summary>
 public class TitleSceneLoader : SceneLoader
 {
     public TitleSceneLoader(IServiceFactory serviceFactory) : base(serviceFactory) { }

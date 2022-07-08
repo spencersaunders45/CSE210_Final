@@ -5,6 +5,17 @@ using CSE210_Final.Game.Services;
 
 namespace CSE210_Final.Game.Casting;
 
+public enum PlayerState
+{
+    Idle,
+    Moving,
+    Attacking,
+    Dead
+}
+
+/// <summary>
+/// The main player actor.
+/// </summary>
 public class PlayerController : Actor
 {
 
@@ -12,18 +23,22 @@ public class PlayerController : Actor
     private int _moveY;
     private int _moveX;
     private Scene _currentScene;
-    private bool topCol;
-    private bool botCol;
-    private bool rightCol;
-    private bool leftCol;
+    private bool _topCol;
+    private bool _botCol;
+    private bool _rightCol;
+    private bool _leftCol;
+    private bool _isMovingY;
+    private bool _isMovingH;
+    private int _isMovingRight;
     
     public PlayerController(Vector2 pos, Vector2 size, Color color, Scene scene)
     {
         MoveTo(pos);
         SizeTo(size);
         Tint(color);
-        _movementSpeed = 4;
+        _movementSpeed = 3;
         _currentScene = scene;
+        _isMovingRight = 1;
     }
 
     public void Update(IServiceFactory serviceFactory)
@@ -37,13 +52,13 @@ public class PlayerController : Actor
         {
             // There are two different spots that get checked for each side in terms of collision
             // to make collision more precise.
-            topCol = wall.Overlaps(new Vector2(GetLeft() + 2, GetTop() - 2)) || // Top
+            _topCol = wall.Overlaps(new Vector2(GetLeft() + 2, GetTop() - 2)) || // Top
                      wall.Overlaps(new Vector2(GetRight() - 2, GetTop() - 2));
 
-            botCol = wall.Overlaps(new Vector2(GetLeft() + 2, GetBottom() + 2)) || // Bottom
+            _botCol = wall.Overlaps(new Vector2(GetLeft() + 2, GetBottom() + 2)) || // Bottom
                      wall.Overlaps(new Vector2(GetRight() - 2, GetBottom() + 2));
 
-            if (topCol || botCol)    // Break the loop if collision is detected.
+            if (_topCol || _botCol)    // Break the loop if collision is detected.
                 break;                                      /* If this doesn't happen, collision will only work with 
                                                                 the last object in the list. */
         }
@@ -53,35 +68,67 @@ public class PlayerController : Actor
         {
             // There are two different spots that get checked for each side in terms of collision
             // to make collision more precise.
-            rightCol = wall.Overlaps(new Vector2(GetRight() + 2, GetTop() + 2)) || // Right
+            _rightCol = wall.Overlaps(new Vector2(GetRight() + 2, GetTop() + 2)) || // Right
                        wall.Overlaps(new Vector2(GetRight() + 2, GetBottom() - 2));
 
-            leftCol = wall.Overlaps(new Vector2(GetLeft() - 2, GetTop() + 2)) || // Left
+            _leftCol = wall.Overlaps(new Vector2(GetLeft() - 2, GetTop() + 2)) || // Left
                       wall.Overlaps(new Vector2(GetLeft() - 2, GetBottom() - 2));
 
-            if (rightCol || leftCol)    // Break the loop if collision is detected.
+            if (_rightCol || _leftCol)    // Break the loop if collision is detected.
                 break;                                      /* If this doesn't happen, collision will only work with 
                                                                 the last object in the list. */
         }
         
         // Vertical
-        if (keyboardService.IsKeyDown(KeyboardKey.Down) && !botCol) // Down
+        if (keyboardService.IsKeyDown(KeyboardKey.Down) && !_botCol) // Down
+        {
             _moveY = _movementSpeed;
-        else if (keyboardService.IsKeyDown(KeyboardKey.Up) && !topCol) // Up
+            _isMovingY = true;
+        }
+        else if (keyboardService.IsKeyDown(KeyboardKey.Up) && !_topCol) // Up
+        {
             _moveY = -_movementSpeed;
+            _isMovingY = true;
+        }
         else
+        {
             _moveY = 0;
+            _isMovingY = false;
+        }
         
         // Horizontal Movement
-        if (keyboardService.IsKeyDown(KeyboardKey.Right) && !rightCol) // Right
+        if (keyboardService.IsKeyDown(KeyboardKey.Right) && !_rightCol) // Right
+        {
             _moveX = _movementSpeed;
-        else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !leftCol) // Left
+            _isMovingH = true;
+            _isMovingRight = 1;
+        }
+        else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !_leftCol) // Left
+        {
             _moveX = -_movementSpeed;
+            _isMovingH = true;
+            _isMovingRight = -1;
+        }
         else
+        {
             _moveX = 0;
-        
+            _isMovingH = false;
+        }
         
         Steer(_moveX, _moveY);
         Move();
+    }
+
+    public int IsMovingRight()
+    {
+        return _isMovingRight;
+    }
+
+    public PlayerState GetPlayerState()
+    {
+        if (_isMovingH || _isMovingY)
+            return PlayerState.Moving;
+        else
+            return PlayerState.Idle;
     }
 }

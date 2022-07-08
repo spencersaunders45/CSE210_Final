@@ -7,10 +7,13 @@ using CSE210_Final.Game.Services;
 
 namespace CSE210_Final.Game.Scripting
 {
+    /// <summary>
+    /// Handles drawing *most* of the actors.
+    /// </summary>
     public class DrawActorsAction : CSE210_Final.Game.Scripting.Action
     {
         private IVideoService _videoService;
-
+        
         public DrawActorsAction(IServiceFactory serviceFactory)
         {
             _videoService = serviceFactory.GetVideoService();
@@ -20,13 +23,9 @@ namespace CSE210_Final.Game.Scripting
         {
             try
             {
-                PlayerController player = scene.GetFirstActor<PlayerController>("player");
                 List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
                 List<Label> labels = scene.GetAllActors<Label>("label");
                 _videoService.ClearBuffer();
-                
-                if(player != null)
-                    _videoService.Draw(player); // Draw Player
                 
                 // Draw Walls
                 foreach (SolidWall wall in walls) 

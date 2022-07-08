@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using CSE210_Final.Game.Casting;
 using CSE210_Final.Game.Scripting;
@@ -41,6 +41,11 @@ namespace CSE210_Final.Game.Scripting
             {
                 callback.OnError("Couldn't draw actors.", exception);
             }
+        }
+
+        private void DrawSkeletons(Skeleton skeleton)
+        {
+            _videoService.Draw(skeleton);
         }
     }
 }

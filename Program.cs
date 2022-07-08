@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using CSE210_Final.Game.Casting;
 using CSE210_Final.Game.Directing;
 using CSE210_Final.Game.Scripting;
@@ -10,9 +10,9 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        //TODO: Initialize game entry point here.
         IServiceFactory serviceFactory = new RaylibServiceFactory();
-        Scene testScene = new Scene();
+
+        Scene scene = new Scene();
 
         //-------------------Testing-------------------
         serviceFactory.GetVideoService().SetBackground(Color.Black());
@@ -41,9 +41,15 @@ public static class Program
         testScene.AddActor("skeleton" , skeleton8);
 
         DrawActorsAction drawActorsAction = new DrawActorsAction(serviceFactory);
-        testScene.AddAction(Phase.Output ,drawActorsAction);
+        scene.AddAction(Phase.Output ,drawActorsAction);
+
         
+        // Scene Loaders are created to handle loading specific scenes.
+        TitleSceneLoader titleSceneLoader = new TitleSceneLoader(serviceFactory);
+        titleSceneLoader.Load(scene);
+
+        // Start Game
         Director director = new Director(serviceFactory);
-        director.Direct(testScene);
+        director.Direct(scene);
     }
 }

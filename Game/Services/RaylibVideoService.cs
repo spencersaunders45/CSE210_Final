@@ -73,6 +73,22 @@ namespace CSE210_Final.Game.Services
             
             Raylib.DrawTexturePro(texture, source, destination, origin, rotation, tint);
         }
+        
+        public void Draw(Casting.Image image, int dir)
+        {
+            Vector2 position = image.GetCenter();
+            Vector2 originalSize = image.GetOriginalSize();
+            Vector2 size = image.GetSize();
+            
+            Texture2D texture = GetRaylibTexture(image.GetFile());
+            Rectangle source = new Rectangle(0, 0, originalSize.X * dir, originalSize.Y);
+            Rectangle destination = new Rectangle(position.X, position.Y, size.X, size.Y);
+            Vector2 origin = new Vector2(size.X / 2, size.Y / 2);
+            float rotation = image.GetRotation();
+            Raylib_cs.Color tint = GetRaylibColor(image.GetTint());
+            
+            Raylib.DrawTexturePro(texture, source, destination, origin, rotation, tint);
+        }
 
         public void Draw(Casting.Image image, Camera camera)
         {

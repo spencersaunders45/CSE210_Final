@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using CSE210_Final.Game.Casting;
 using CSE210_Final.Game.Scripting;
@@ -7,10 +7,13 @@ using CSE210_Final.Game.Services;
 
 namespace CSE210_Final.Game.Scripting
 {
+    /// <summary>
+    /// Handles drawing *most* of the actors.
+    /// </summary>
     public class DrawActorsAction : CSE210_Final.Game.Scripting.Action
     {
         private IVideoService _videoService;
-
+        
         public DrawActorsAction(IServiceFactory serviceFactory)
         {
             _videoService = serviceFactory.GetVideoService();
@@ -20,13 +23,18 @@ namespace CSE210_Final.Game.Scripting
         {
             try
             {
-                PlayerController player = scene.GetFirstActor<PlayerController>("player");
-                List<Skeleton> allSkeletons = scene.GetAllActors<Skeleton>("skeleton");
-                Skeleton boss = scene.GetFirstActor<Skeleton>("boss");
+                List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
+                List<Label> labels = scene.GetAllActors<Label>("label");
                 _videoService.ClearBuffer();
-                allSkeletons.ForEach(DrawSkeletons);
-                _videoService.Draw(boss);
-                _videoService.Draw(player);
+                
+                // Draw Walls
+                foreach (SolidWall wall in walls) 
+                { _videoService.Draw(wall); }
+                
+                // Draw Labels
+                foreach (Label label in labels)
+                { _videoService.Draw(label); }
+                
                 _videoService.FlushBuffer();
             }
             catch (Exception exception)

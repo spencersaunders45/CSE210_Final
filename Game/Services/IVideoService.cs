@@ -10,6 +10,7 @@ namespace CSE210_Final.Game.Services
         void Draw(Actor actor);
         void Draw(Actor actor, Camera camera);
         void Draw(Image image);
+        void Draw(Image image, int dir);
         void Draw(Image image, Camera camera);
         void Draw(Label actor);
         void Draw(Label actor, Camera camera);

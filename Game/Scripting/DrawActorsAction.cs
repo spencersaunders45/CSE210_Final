@@ -26,6 +26,9 @@ namespace CSE210_Final.Game.Scripting
                 List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
                 List<Label> labels = scene.GetAllActors<Label>("label");
                 _videoService.ClearBuffer();
+
+                Skeleton boss = scene.GetFirstActor<Skeleton>("boss");
+                List<Skeleton> skeletons = scene.GetAllActors<Skeleton>("skeleton"); 
                 
                 // Draw Walls
                 foreach (SolidWall wall in walls) 
@@ -34,6 +37,12 @@ namespace CSE210_Final.Game.Scripting
                 // Draw Labels
                 foreach (Label label in labels)
                 { _videoService.Draw(label); }
+                
+                //Draw Skeletons
+                foreach (Skeleton skeleton in skeletons)
+                {_videoService.Draw(skeleton);}
+                if(boss != null)
+                    _videoService.Draw(boss);
                 
                 _videoService.FlushBuffer();
             }

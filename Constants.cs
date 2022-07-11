@@ -8,6 +8,17 @@ namespace CSE210_Final
       public static string GAME_NAME = "Save your Dog!";
       public static int FRAME_RATE = 60;
 
+      // SKELETON SPAWN LOCATIONS
+      private static int[] location1 = {0, 10};
+      private static int[] location2 = {25, 30};
+      private static int[] location3 = {45, 50};
+      private static int[] location4 = {65 ,70};
+      private static int[] location5 = {85, 90};
+      private static int[] location6 = {105, 110};
+      private static int[] location7 = {125, 130};
+      private static int[] location8 = {145, 150};
+      public static int[][] SEKELETON_LOCATIONS = {location1, location2, location3, location4, location5, location6, location7, location8,};
+
       // SCREEN
       public static int SCREEN_WIDTH = 1040;
       public static int SCREEN_HEIGHT = 680;

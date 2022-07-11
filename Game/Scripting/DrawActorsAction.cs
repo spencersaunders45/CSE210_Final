@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using CSE210_Final.Game.Casting;
 using CSE210_Final.Game.Scripting;
@@ -28,6 +28,9 @@ namespace CSE210_Final.Game.Scripting
                 List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
                 List<Label> labels = scene.GetAllActors<Label>("label");
                 _videoService.ClearBuffer();
+
+                Skeleton boss = scene.GetFirstActor<Skeleton>("boss");
+                List<Skeleton> skeletons = scene.GetAllActors<Skeleton>("skeleton"); 
                 
                 // Draw Walls
                 foreach (SolidWall wall in walls) 
@@ -37,12 +40,23 @@ namespace CSE210_Final.Game.Scripting
                 foreach (Label label in labels)
                 { _videoService.Draw(label); }
                 
+                //Draw Skeletons
+                foreach (Skeleton skeleton in skeletons)
+                {_videoService.Draw(skeleton);}
+                if(boss != null)
+                    _videoService.Draw(boss);
+                
                 _videoService.FlushBuffer();
             }
             catch (Exception exception)
             {
                 callback.OnError("Couldn't draw actors.", exception);
             }
+        }
+
+        private void DrawSkeletons(Skeleton skeleton)
+        {
+            _videoService.Draw(skeleton);
         }
     }
 }

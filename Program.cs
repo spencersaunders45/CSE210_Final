@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using CSE210_Final.Game.Casting;
 using CSE210_Final.Game.Directing;
 using CSE210_Final.Game.Scripting;
@@ -11,7 +11,13 @@ public static class Program
     public static void Main(string[] args)
     {
         IServiceFactory serviceFactory = new RaylibServiceFactory();
+
         Scene scene = new Scene();
+        
+
+        DrawActorsAction drawActorsAction = new DrawActorsAction(serviceFactory);
+        scene.AddAction(Phase.Output ,drawActorsAction);
+
         
         // Scene Loaders are created to handle loading specific scenes.
         TitleSceneLoader titleSceneLoader = new TitleSceneLoader(serviceFactory);

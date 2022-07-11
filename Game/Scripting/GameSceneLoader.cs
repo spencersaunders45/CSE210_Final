@@ -9,6 +9,8 @@ namespace CSE210_Final.Game.Scripting;
 public class GameSceneLoader : SceneLoader
 {
     public GameSceneLoader(IServiceFactory serviceFactory) : base(serviceFactory) { }
+    private SkeletonHandler _skeletonHandler = new SkeletonHandler();
+    private int _index;
 
     public override void Load(Scene scene)
     {
@@ -38,26 +40,17 @@ public class GameSceneLoader : SceneLoader
         scene.AddActor("player" , playerController);
         scene.AddActor("label", back);
         
-        //Skeletons
-        Skeleton boss = new Skeleton(500, 340, Vector2.One * 24, Color.Red());
-        Skeleton skeleton1 = new Skeleton(0, 0, Vector2.One * 16, Color.Green());
-        Skeleton skeleton2 = new Skeleton(20, 0, Vector2.One * 16, Color.Green());
-        Skeleton skeleton3 = new Skeleton(40, 0, Vector2.One * 16, Color.Green());
-        Skeleton skeleton4 = new Skeleton(60, 0, Vector2.One * 16, Color.Green());
-        Skeleton skeleton5 = new Skeleton(80, 0, Vector2.One * 16, Color.Green());
-        Skeleton skeleton6 = new Skeleton(100, 0, Vector2.One * 16, Color.Green());
-        Skeleton skeleton7 = new Skeleton(120, 0, Vector2.One * 16, Color.Green());
-        Skeleton skeleton8 = new Skeleton(140, 0, Vector2.One * 16, Color.Green());
+        // Add Skeletons
+        while(_skeletonHandler.GetSkeletonCounter() <= 8)
+        {
+            int[] spawnLocation = GetSkeletonSpawnLocation();
+            Skeleton skeleton = new Skeleton(spawnLocation[0], spawnLocation[1], Vector2.One * 16, Color.Green(), 100);
+            scene.AddActor("skeleton", skeleton);
+        }
+        Skeleton boss = new Skeleton(500, 340, Vector2.One * 24, Color.Red(), 200);
         scene.AddActor("boss" , boss);
-        scene.AddActor("skeleton" , skeleton1);
-        scene.AddActor("skeleton" , skeleton2);
-        scene.AddActor("skeleton" , skeleton3);
-        scene.AddActor("skeleton" , skeleton4);
-        scene.AddActor("skeleton" , skeleton5);
-        scene.AddActor("skeleton" , skeleton6);
-        scene.AddActor("skeleton" , skeleton7);
-        scene.AddActor("skeleton" , skeleton8);
 
+        // Add Walls
         for (int i = 0; i < 8; i++)
         {
             scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 100, 200), Vector2.One * 32, Color.Purple(), scene));
@@ -72,5 +65,20 @@ public class GameSceneLoader : SceneLoader
         scene.AddAction(Phase.Input, sceneTransitionAction);
         scene.AddAction(Phase.Output, animatePlayerAction);
         scene.AddAction(Phase.Output, drawActorsAction);
+    }
+
+    private int[] GetSkeletonSpawnLocation()
+    {
+        List<int[]> spawnLocations = _skeletonHandler.GetSpawnLocation();
+        int[] location = spawnLocations[_index];
+        if(_index < 8)
+        {
+            _index++;
+        }
+        else
+        {
+            _index = 0;
+        }
+        return location;
     }
 }

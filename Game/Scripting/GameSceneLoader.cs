@@ -49,10 +49,8 @@ public class GameSceneLoader : SceneLoader
         scene.AddActor("player-image", playerImage);
         scene.AddActor("player" , playerController);
         scene.AddActor("label", back);
-<<<<<<< HEAD
         scene.AddActor("camera", camera);
         
-=======
         
         //Skeletons
         Skeleton boss = new Skeleton(500, 340, Vector2.One * 24, Color.Red());
@@ -73,7 +71,6 @@ public class GameSceneLoader : SceneLoader
         scene.AddActor("skeleton" , skeleton6);
         scene.AddActor("skeleton" , skeleton7);
         scene.AddActor("skeleton" , skeleton8);
->>>>>>> 55c2894abee64ffab26aa9d1c4d8e2aba4cf9f3e
 
         for (int i = 0; i < 8; i++)
         {

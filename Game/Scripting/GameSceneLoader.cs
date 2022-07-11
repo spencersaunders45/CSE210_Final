@@ -9,8 +9,6 @@ namespace CSE210_Final.Game.Scripting;
 public class GameSceneLoader : SceneLoader
 {
     public GameSceneLoader(IServiceFactory serviceFactory) : base(serviceFactory) { }
-    private SkeletonHandler _skeletonHandler = new SkeletonHandler();
-    private int _index;
 
     public override void Load(Scene scene)
     {
@@ -41,14 +39,14 @@ public class GameSceneLoader : SceneLoader
         scene.AddActor("label", back);
         
         // Add Skeletons
-        while(_skeletonHandler.GetSkeletonCounter() <= 8)
-        {
-            int[] spawnLocation = GetSkeletonSpawnLocation();
-            Skeleton skeleton = new Skeleton(spawnLocation[0], spawnLocation[1], Vector2.One * 16, Color.Green(), 100);
-            scene.AddActor("skeleton", skeleton);
-        }
-        Skeleton boss = new Skeleton(500, 340, Vector2.One * 24, Color.Red(), 200);
+        Skeleton boss = new Skeleton(500, 340, Vector2.One * 24, Color.Red(), 16);
         scene.AddActor("boss" , boss);
+        for(int i = 0; i < 8; i++)
+        {
+            int[] location = Constants.SEKELETON_LOCATIONS[i];
+            Skeleton skeleton = new Skeleton(location[0], location[1], Vector2.One * 24, Color.Green(), 16);
+            scene.AddActor("skeleton" , skeleton);
+        }
 
         // Add Walls
         for (int i = 0; i < 8; i++)
@@ -65,20 +63,5 @@ public class GameSceneLoader : SceneLoader
         scene.AddAction(Phase.Input, sceneTransitionAction);
         scene.AddAction(Phase.Output, animatePlayerAction);
         scene.AddAction(Phase.Output, drawActorsAction);
-    }
-
-    private int[] GetSkeletonSpawnLocation()
-    {
-        List<int[]> spawnLocations = _skeletonHandler.GetSpawnLocation();
-        int[] location = spawnLocations[_index];
-        if(_index < 8)
-        {
-            _index++;
-        }
-        else
-        {
-            _index = 0;
-        }
-        return location;
     }
 }

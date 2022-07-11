@@ -20,6 +20,7 @@ public class GameSceneLoader : SceneLoader
         TitleSceneLoader titleSceneLoader = new TitleSceneLoader(serviceFactory);
         Image playerImage = new Image();
         
+        
         // Define Actions
         UpdateActorsAction updateActorsAction = new UpdateActorsAction(serviceFactory);
         SceneTransitionAction sceneTransitionAction =
@@ -32,11 +33,24 @@ public class GameSceneLoader : SceneLoader
         back.Align(Label.Left);
         
         scene.Clear();
+
+
         
         // Add Actors
+        Actor screen = new Actor();
+        screen.SizeTo(640, 480);
+        screen.MoveTo(0, 0);
+
+        Actor world = new Actor();
+        world.SizeTo(1280, 960);
+        world.MoveTo(0, 0);
+        Camera camera = new Camera(playerImage, screen, world);
+
         scene.AddActor("player-image", playerImage);
         scene.AddActor("player" , playerController);
         scene.AddActor("label", back);
+        scene.AddActor("camera", camera);
+        
 
         for (int i = 0; i < 8; i++)
         {

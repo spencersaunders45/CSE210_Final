@@ -112,6 +112,28 @@ namespace CSE210_Final.Game.Services
             }
         }
 
+        public void Draw(Casting.Image image, Camera camera, int dir)
+        {
+            Actor focus = camera.GetFocus();
+            Actor screen = camera.GetScreen();
+
+            if (image == focus || image.Overlaps(screen))
+            {
+                Vector2 position = image.GetCenter() - camera.GetPosition();
+                Vector2 originalSize = image.GetOriginalSize();
+                Vector2 size = image.GetSize();
+                
+                Texture2D texture = GetRaylibTexture(image.GetFile());
+                Rectangle source = new Rectangle(0, 0, originalSize.X * dir, originalSize.Y);
+                Rectangle destination = new Rectangle(position.X, position.Y, size.X, size.Y);
+                Vector2 origin = new Vector2(size.X / 2, size.Y / 2);
+                float rotation = image.GetRotation();
+                Raylib_cs.Color tint = GetRaylibColor(image.GetTint());
+                
+                Raylib.DrawTexturePro(texture, source, destination, origin, rotation, tint);
+            }
+        }
+
         public void Draw(Label label)
         {
             Raylib_cs.Font font = GetRaylibFont(label.GetFontFile());   

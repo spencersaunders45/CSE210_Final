@@ -2,5 +2,6 @@
   "frameRate": 60,
   "screenCaption": "CSE210",
   "screenWidth": 640,
-  "screenHeight": 480
+  "screenHeight": 480,
+  "backgroundMusic": "Assets/Audio/background/nightshade.mp3"
 }

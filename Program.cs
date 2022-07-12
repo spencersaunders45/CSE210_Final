@@ -17,6 +17,8 @@ public static class Program
 
         DrawActorsAction drawActorsAction = new DrawActorsAction(serviceFactory);
         scene.AddAction(Phase.Output ,drawActorsAction);
+        SkeletonHandler skeletonHandler = new SkeletonHandler();
+        scene.AddAction(Phase.Output, skeletonHandler);
 
         
         // Scene Loaders are created to handle loading specific scenes.

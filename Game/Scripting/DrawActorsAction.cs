@@ -30,7 +30,7 @@ namespace CSE210_Final.Game.Scripting
                 _videoService.ClearBuffer();
 
                 Skeleton boss = scene.GetFirstActor<Skeleton>("boss");
-                List<Skeleton> skeletons = scene.GetAllActors<Skeleton>("skeleton"); 
+                List<Skeleton> skeletons = scene.GetAllActors<Skeleton>("skeleton");
                 
                 // Draw Walls
                 foreach (SolidWall wall in walls) 

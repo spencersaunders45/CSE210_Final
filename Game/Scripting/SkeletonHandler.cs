@@ -52,6 +52,34 @@ namespace CSE210_Final.Game.Scripting
                float y = skeleton.Y;
                allSkeletons[i].MoveTo(x+1, y);
             }
+            // Move up-right
+            else if(playerLocation.X > skeleton.X && playerLocation.Y > skeleton.Y)
+            {
+               float x = skeleton.X;
+               float y = skeleton.Y;
+               allSkeletons[i].MoveTo(x+1, y+1);
+            }
+            // Moves up-left
+            else if(playerLocation.X < skeleton.X && playerLocation.Y > skeleton.Y)
+            {
+               float x = skeleton.X;
+               float y = skeleton.Y;
+               allSkeletons[i].MoveTo(x-1, y+1);
+            }
+            // Moves down-right
+            else if(playerLocation.X < skeleton.X && playerLocation.Y < skeleton.Y)
+            {
+               float x = skeleton.X;
+               float y = skeleton.Y;
+               allSkeletons[i].MoveTo(x+1, y-1);
+            }
+            //Moves down-left
+            else if(playerLocation.X > skeleton.X && playerLocation.Y < skeleton.Y)
+            {
+               float x = skeleton.X;
+               float y = skeleton.Y;
+               allSkeletons[i].MoveTo(x-1, y-1);
+            }
          }
       }
 

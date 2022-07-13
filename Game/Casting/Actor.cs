@@ -16,6 +16,7 @@ namespace CSE210_Final.Game.Casting
         private Vector2 _size = Vector2.Zero;
         private Color _tint = Color.White();
         private Vector2 _velocity = Vector2.Zero;
+        protected int _health;
         
         public Actor() { }
 

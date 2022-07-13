@@ -19,6 +19,9 @@ public class GameSceneLoader : SceneLoader
         PlayerController playerController = new PlayerController(Vector2.One * 100, new Vector2(16, 32), Color.Green(), scene);
         TitleSceneLoader titleSceneLoader = new TitleSceneLoader(serviceFactory);
         Image playerImage = new Image();
+        PlayMusicAction playMusicAction = new PlayMusicAction(serviceFactory);
+        
+        
         
         // Define Actions
         UpdateActorsAction updateActorsAction = new UpdateActorsAction(serviceFactory);
@@ -33,32 +36,35 @@ public class GameSceneLoader : SceneLoader
         back.Align(Label.Left);
         
         scene.Clear();
+
+
         
         // Add Actors
+        Actor screen = new Actor();
+        screen.SizeTo(640, 480);
+        screen.MoveTo(0, 0);
+
+        Actor world = new Actor();
+        world.SizeTo(1280, 960);
+        world.MoveTo(0, 0);
+        Camera camera = new Camera(playerImage, screen, world);
+
         scene.AddActor("player-image", playerImage);
         scene.AddActor("player" , playerController);
         scene.AddActor("label", back);
+        scene.AddActor("camera", camera);
         
-        //Skeletons
-        Skeleton boss = new Skeleton(500, 340, Vector2.One * 32, Color.Red(), scene);
-        Skeleton skeleton1 = new Skeleton(0, 0, Vector2.One * 32, Color.Green(), scene);
-        Skeleton skeleton2 = new Skeleton(20, 0, Vector2.One * 32, Color.Green(), scene);
-        Skeleton skeleton3 = new Skeleton(40, 0, Vector2.One * 32, Color.Green(), scene);
-        Skeleton skeleton4 = new Skeleton(60, 0, Vector2.One * 32, Color.Green(), scene);
-        Skeleton skeleton5 = new Skeleton(80, 0, Vector2.One * 32, Color.Green(), scene);
-        Skeleton skeleton6 = new Skeleton(100, 0, Vector2.One * 32, Color.Green(), scene);
-        Skeleton skeleton7 = new Skeleton(120, 0, Vector2.One * 32, Color.Green(), scene);
-        Skeleton skeleton8 = new Skeleton(140, 0, Vector2.One * 32, Color.Green(), scene);
+        // Add Skeletons
+        Skeleton boss = new Skeleton(500, 340, Vector2.One * 24, Color.Red(), 16, scene);
         scene.AddActor("boss" , boss);
-        scene.AddActor("skeleton" , skeleton1);
-        scene.AddActor("skeleton" , skeleton2);
-        scene.AddActor("skeleton" , skeleton3);
-        scene.AddActor("skeleton" , skeleton4);
-        scene.AddActor("skeleton" , skeleton5);
-        scene.AddActor("skeleton" , skeleton6);
-        scene.AddActor("skeleton" , skeleton7);
-        scene.AddActor("skeleton" , skeleton8);
+        for(int i = 0; i < 8; i++)
+        {
+            int[] location = Constants.SEKELETON_LOCATIONS[i];
+            Skeleton skeleton = new Skeleton(location[0], location[1], Vector2.One * 24, Color.Green(), 16, scene);
+            scene.AddActor("skeleton" , skeleton);
+        }
 
+        // Add Walls
         for (int i = 0; i < 8; i++)
         {
             scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 100, 200), Vector2.One * 32, Color.Purple(), scene));
@@ -67,12 +73,16 @@ public class GameSceneLoader : SceneLoader
         {
             scene.AddActor("wall", new SolidWall(new Vector2(164, (i * 32) + 150), Vector2.One * 32, Color.Purple(), scene));
         }
+
+        SkeletonHandler skeletonHandler = new SkeletonHandler();
         
         // Add Actions
         scene.AddAction(Phase.Input, updateActorsAction);
         scene.AddAction(Phase.Input, sceneTransitionAction);
+        scene.AddAction(Phase.Output, playMusicAction);
         scene.AddAction(Phase.Output, animatePlayerAction);
         scene.AddAction(Phase.Output, drawActorsAction);
         scene.AddAction(Phase.Output, drawSkeletonAction);
+        scene.AddAction(Phase.Update, skeletonHandler);
     }
 }

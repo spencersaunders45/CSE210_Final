@@ -20,6 +20,7 @@ public class DrawSkeletonAction : Action
     {
         _skeletons = scene.GetAllActors<Skeleton>("skeleton");
         _boss = scene.GetFirstActor<Skeleton>("boss");
+        Camera camera = scene.GetFirstActor<Camera>("camera");
 
         _idle[0] = "Assets/Images/Skeleton/Idle/Skeleton_Idle_0.png";
         _idle[1] = "Assets/Images/Skeleton/Idle/Skeleton_Idle_1.png";
@@ -39,14 +40,14 @@ public class DrawSkeletonAction : Action
         {
             skeleton.UpdateImage();
             skeleton.GetImage().Animate(_run, 0.5f, 60);
-            _videoService.Draw(skeleton.GetImage());
+            _videoService.Draw(skeleton.GetImage(), camera);
         }
         
         if(_boss != null)
         {
             _boss.UpdateImage();
             _boss.GetImage().Animate(_run, 0.5f, 60);
-            _videoService.Draw(_boss.GetImage());
+            _videoService.Draw(_boss.GetImage(), camera);
         }
     }
 }

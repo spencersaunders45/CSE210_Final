@@ -47,18 +47,23 @@ public class AnimatePlayerAction : Action
 
     public override void Execute(Scene scene, float deltaTime, IActionCallback callback)
     {
+        Camera camera = scene.GetFirstActor<Camera>("camera");
+        Actor world = camera.GetWorld();
+
         if (_player.GetPlayerState() == PlayerState.Idle)
         {
             _image.MoveTo(_player.GetPosition());
+            _image.ClampTo(world);
             _image.Animate(_idle, 0.75f, 60, true);
-            _videoService.Draw(_image, _player.IsMovingRight());
+            _videoService.Draw(_image, camera, _player.IsMovingRight());
         }
         
         else if (_player.GetPlayerState() == PlayerState.Moving)
         {
             _image.MoveTo(_player.GetPosition());
+            _image.ClampTo(world);
             _image.Animate(_run, 0.85f, 60, true);
-            _videoService.Draw(_image, _player.IsMovingRight());
+            _videoService.Draw(_image, camera, _player.IsMovingRight());
         }
         
         else if (_player.GetPlayerState() == PlayerState.Attacking)
@@ -66,7 +71,7 @@ public class AnimatePlayerAction : Action
             _image.MoveTo(_player.GetPosition());
             _image.Animate(_attack, 1f, 60, true);
             _image.SizeTo(new Vector2(48, 32));
-            _videoService.Draw(_image, _player.IsMovingRight());
+            _videoService.Draw(_image, camera, _player.IsMovingRight());
         }
         
     }

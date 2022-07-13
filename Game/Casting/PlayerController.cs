@@ -18,7 +18,6 @@ public enum PlayerState
 /// </summary>
 public class PlayerController : Actor
 {
-
     private int _movementSpeed;
     private int _moveY;
     private int _moveX;
@@ -29,6 +28,11 @@ public class PlayerController : Actor
     private bool _leftCol;
     private bool _isMovingY;
     private bool _isMovingH;
+    
+    private bool _isAttacking;
+    private float _attackTimer;
+    private float _maxAttackTime;
+    
     private int _isMovingRight;
     
     public PlayerController(Vector2 pos, Vector2 size, Color color, Scene scene)
@@ -39,6 +43,9 @@ public class PlayerController : Actor
         _movementSpeed = 3;
         _currentScene = scene;
         _isMovingRight = 1;
+        _isAttacking = false;
+        _attackTimer = 0;
+        _maxAttackTime = 1f;
     }
 
     public void Update(IServiceFactory serviceFactory)
@@ -80,12 +87,12 @@ public class PlayerController : Actor
         }
         
         // Vertical
-        if (keyboardService.IsKeyDown(KeyboardKey.Down) && !_botCol) // Down
+        if (keyboardService.IsKeyDown(KeyboardKey.Down) && !_botCol && !_isAttacking) // Down
         {
             _moveY = _movementSpeed;
             _isMovingY = true;
         }
-        else if (keyboardService.IsKeyDown(KeyboardKey.Up) && !_topCol) // Up
+        else if (keyboardService.IsKeyDown(KeyboardKey.Up) && !_topCol && !_isAttacking) // Up
         {
             _moveY = -_movementSpeed;
             _isMovingY = true;
@@ -97,13 +104,13 @@ public class PlayerController : Actor
         }
         
         // Horizontal Movement
-        if (keyboardService.IsKeyDown(KeyboardKey.Right) && !_rightCol) // Right
+        if (keyboardService.IsKeyDown(KeyboardKey.Right) && !_rightCol && !_isAttacking) // Right
         {
             _moveX = _movementSpeed;
             _isMovingH = true;
             _isMovingRight = 1;
         }
-        else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !_leftCol) // Left
+        else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !_leftCol && !_isAttacking) // Left
         {
             _moveX = -_movementSpeed;
             _isMovingH = true;
@@ -113,6 +120,19 @@ public class PlayerController : Actor
         {
             _moveX = 0;
             _isMovingH = false;
+        }
+
+        if (keyboardService.IsKeyDown(KeyboardKey.Space) && !_isAttacking && _attackTimer == 0)
+            _isAttacking = true;
+
+        if (_isAttacking)
+        {
+            _attackTimer += serviceFactory.GetVideoService().GetDeltaTime();
+            if(_attackTimer >= _maxAttackTime)
+            {
+                _isAttacking = false;
+                _attackTimer = 0;
+            }
         }
         
         Steer(_moveX, _moveY);
@@ -126,9 +146,12 @@ public class PlayerController : Actor
 
     public PlayerState GetPlayerState()
     {
-        if (_isMovingH || _isMovingY)
+        if (_isMovingH || _isMovingY && !_isAttacking)
             return PlayerState.Moving;
-        else
-            return PlayerState.Idle;
+        
+        if (_isAttacking)
+            return PlayerState.Attacking;
+        
+        return PlayerState.Idle;
     }
 }

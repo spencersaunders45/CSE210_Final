@@ -32,17 +32,17 @@ namespace CSE210_Final.Game.Scripting
                 
                 // Draw Walls
                 foreach (SolidWall wall in walls) 
-                { _videoService.Draw(wall); }
+                {_videoService.Draw(wall);}
                 
                 // Draw Labels
                 foreach (Label label in labels)
-                { _videoService.Draw(label); }
+                {_videoService.Draw(label);}
                 
                 //Draw Skeletons
-                foreach (Skeleton skeleton in skeletons)
-                {_videoService.Draw(skeleton);}
-                if(boss != null)
-                    _videoService.Draw(boss);
+                // foreach (Skeleton skeleton in skeletons)
+                // {_videoService.Draw(skeleton);}
+                // if(boss != null)
+                //     _videoService.Draw(boss);
                 
                 _videoService.FlushBuffer();
             }

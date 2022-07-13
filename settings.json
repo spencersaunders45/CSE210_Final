@@ -4,5 +4,6 @@
   "screenWidth": 640,
   "screenHeight": 480,
   "backgroundMusic": "Assets/Audio/background/nightshade.mp3",
-  "swordSwish": "Assets/Audio/soundeffect/swordswish.mp3"
+  "swordSwish": "Assets/Audio/soundeffect/swordswish.mp3",
+  "bounceSound": "Assets/Audio/soundeffect/swordswish.mp3"
 }

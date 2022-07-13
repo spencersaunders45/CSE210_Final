@@ -9,7 +9,10 @@ namespace CSE210_Final.Game.Scripting;
 /// </summary>
 public class AnimatePlayerAction : Action
 {
+    private bool _toggle;
     private IVideoService _videoService;
+    private IAudioService _audioService;
+    private ISettingsService _settingsService;
 
     private String[] _idle = new String[6];
     private String[] _run = new String[6];
@@ -20,6 +23,14 @@ public class AnimatePlayerAction : Action
     public AnimatePlayerAction(IServiceFactory serviceFactory, PlayerController player, Image playerImage)
     {
         _videoService = serviceFactory.GetVideoService();
+
+        _audioService = serviceFactory.GetAudioService();
+        _settingsService = serviceFactory.GetSettingsService();
+
+        _toggle = false;
+
+
+        
         _player = player;
         _image = playerImage;
         _image.SizeTo(new Vector2(16, 32));
@@ -49,6 +60,8 @@ public class AnimatePlayerAction : Action
     {
         Camera camera = scene.GetFirstActor<Camera>("camera");
         Actor world = camera.GetWorld();
+        string bounceSound = _settingsService.GetString("bounceSound");
+
 
         if (_player.GetPlayerState() == PlayerState.Idle)
         {
@@ -68,6 +81,10 @@ public class AnimatePlayerAction : Action
         
         else if (_player.GetPlayerState() == PlayerState.Attacking)
         {
+            if (!_audioService.IsPlayingSound(bounceSound)){
+                _audioService.PlaySound(bounceSound);
+                _toggle = true;
+            }
             _image.MoveTo(_player.GetPosition());
             _image.Animate(_attack, 1f, 60, true);
             _image.SizeTo(new Vector2(48, 32));

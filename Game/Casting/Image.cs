@@ -31,6 +31,12 @@ namespace CSE210_Final.Game.Casting
             _repeated = repeated;
         }
 
+        public void ResetFrame()
+        {
+            _frame = 0;
+            _index = 0;
+        }
+        
         public void Display(string file)
         {
             _files = new string[] { file };

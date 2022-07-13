@@ -77,7 +77,7 @@ public class GameSceneLoader : SceneLoader
         SkeletonHandler skeletonHandler = new SkeletonHandler();
         
         // Add Actions
-        scene.AddAction(Phase.Input, updateActorsAction);
+        scene.AddAction(Phase.Update, updateActorsAction);
         scene.AddAction(Phase.Input, sceneTransitionAction);
         scene.AddAction(Phase.Output, playMusicAction);
         scene.AddAction(Phase.Output, animatePlayerAction);

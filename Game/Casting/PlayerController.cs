@@ -45,7 +45,7 @@ public class PlayerController : Actor
         _isMovingRight = 1;
         _isAttacking = false;
         _attackTimer = 0;
-        _maxAttackTime = 1f;
+        _maxAttackTime = 0.25f;
     }
 
     public void Update(IServiceFactory serviceFactory)

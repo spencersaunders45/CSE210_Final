@@ -94,7 +94,8 @@ public class AnimatePlayerAction : Action
         {
             _firstFrame = true;
         }
-        
+        List<Image> background = scene.GetAllActors<Image>("background");
+        _videoService.Draw(background, camera);
         _videoService.Draw(_image, camera, _player.IsMovingRight());
         
     }

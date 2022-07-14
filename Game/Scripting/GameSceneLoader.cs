@@ -8,18 +8,25 @@ namespace CSE210_Final.Game.Scripting;
 /// </summary>
 public class GameSceneLoader : SceneLoader
 {
-    public GameSceneLoader(IServiceFactory serviceFactory) : base(serviceFactory) { }
+    private IVideoService _videoService;
+    public GameSceneLoader(IServiceFactory serviceFactory) : base(serviceFactory) { 
+        _videoService = serviceFactory.GetVideoService();
+    }
+
 
     public override void Load(Scene scene)
     {
         IServiceFactory serviceFactory = GetServiceFactory();
         serviceFactory.GetVideoService().SetBackground(Color.Black());
+         
 
         // Define Actors
         PlayerController playerController = new PlayerController(Vector2.One * 100, new Vector2(16, 32), Color.Green(), scene);
         TitleSceneLoader titleSceneLoader = new TitleSceneLoader(serviceFactory);
         Image playerImage = new Image();
         PlayMusicAction playMusicAction = new PlayMusicAction(serviceFactory);
+
+        DrawImageAction drawImageAction = new DrawImageAction(serviceFactory);
         
         
         
@@ -31,6 +38,16 @@ public class GameSceneLoader : SceneLoader
         AnimatePlayerAction animatePlayerAction = new AnimatePlayerAction(serviceFactory, playerController, playerImage);
         DrawSkeletonAction drawSkeletonAction = new DrawSkeletonAction(serviceFactory);
         Label back = new Label();
+
+        Image background = new Image();
+        background.SizeTo(1280, 960);
+        background.MoveTo(0, 0);
+        background.Display("Assets/Images/background/GameScreen.png");
+
+
+        
+        
+
         back.Display("press 'enter' to go back to main screen");
         back.MoveTo(0, 0);
         back.Align(Label.Left);
@@ -48,6 +65,9 @@ public class GameSceneLoader : SceneLoader
         world.SizeTo(1280, 960);
         world.MoveTo(0, 0);
         Camera camera = new Camera(playerImage, screen, world);
+
+        scene.AddActor("background", background);
+
 
         scene.AddActor("player-image", playerImage);
         scene.AddActor("player" , playerController);
@@ -80,8 +100,10 @@ public class GameSceneLoader : SceneLoader
         scene.AddAction(Phase.Update, updateActorsAction);
         scene.AddAction(Phase.Input, sceneTransitionAction);
         scene.AddAction(Phase.Output, playMusicAction);
-        scene.AddAction(Phase.Output, animatePlayerAction);
         scene.AddAction(Phase.Output, drawActorsAction);
+        scene.AddAction(Phase.Output, animatePlayerAction);
+        // scene.AddAction(Phase.Output, drawImageAction);
+        // scene.AddAction(Phase.Output, drawActorsAction);
         scene.AddAction(Phase.Output, drawSkeletonAction);
         scene.AddAction(Phase.Update, skeletonHandler);
     }

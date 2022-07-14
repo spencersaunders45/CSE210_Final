@@ -3,7 +3,7 @@
   "screenCaption": "Save Your Dog!",
   "screenWidth": 640,
   "screenHeight": 480,
-  "backgroundMusic": "Assets/Audio/Music/nightshade_edited.wav",
+  "backgroundMusic": "Assets/Audio/Music/nightshade_edited_smaller.mp3",
   "swordSwish": "Assets/Audio/SFX/Player_Attack01.wav",
   "bounceSound": "Assets/Audio/SFX/Player_Attack01.wav",
   "skeleton_damage_sound": "Assets/Audio/SFX/Skeleton_Damage02.wav",

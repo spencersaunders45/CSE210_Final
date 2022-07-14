@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using CSE210_Final.Game.Scripting;
 using System.Timers;
+using CSE210_Final.Game.Services;
 
 namespace CSE210_Final.Game.Casting
 {
@@ -19,9 +20,13 @@ namespace CSE210_Final.Game.Casting
       // When damaged
       private Vector2 _knockbackVector;
       private float _knockbackDistance;
+      private string _damageSound;
+      private string _deathSound;
+      private ISettingsService _settingsService;
+      private IAudioService _audioService;
 
 
-      public Skeleton(float x, float y , Vector2 size, Color color, int health, Scene scene)
+      public Skeleton(float x, float y , Vector2 size, Color color, int health, Scene scene, IServiceFactory serviceFactory)
       {
          Tint(color);
          MoveTo(x, y);
@@ -33,6 +38,11 @@ namespace CSE210_Final.Game.Casting
          _startY = y;
          RespawnTimer();
          _scene = scene;
+
+         _settingsService = serviceFactory.GetSettingsService();
+         _audioService = serviceFactory.GetAudioService();
+         _damageSound = _settingsService.GetString("skeleton_damage_sound");
+         _deathSound = _settingsService.GetString("skeleton_death_sound");
          
          _knockbackVector = Vector2.Zero;
          _knockbackDistance = 24;
@@ -62,6 +72,11 @@ namespace CSE210_Final.Game.Casting
          if (_health <= 0)
          {
             Disable();
+            _audioService.PlaySound(_deathSound);
+         }
+         else
+         {
+            _audioService.PlaySound(_damageSound);
          }
       }
 
@@ -73,6 +88,8 @@ namespace CSE210_Final.Game.Casting
          _knockbackVector = damagePos - GetCenter();
          _knockbackVector = Vector2.Normalize(_knockbackVector) * _knockbackDistance;
          
+         Tint(Color.Red());
+
          CheckHealth();
       }
 

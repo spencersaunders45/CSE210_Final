@@ -9,7 +9,6 @@ namespace CSE210_Final.Game.Scripting;
 /// </summary>
 public class AnimatePlayerAction : Action
 {
-    private bool _toggle;
     private IVideoService _videoService;
     private IAudioService _audioService;
     private ISettingsService _settingsService;
@@ -19,22 +18,17 @@ public class AnimatePlayerAction : Action
     private String[] _attack = new String[6];
     private PlayerController _player;
     private Image _image;
-    private bool firstFrame;
+    private bool _firstFrame;
 
     public AnimatePlayerAction(IServiceFactory serviceFactory, PlayerController player, Image playerImage)
     {
         _videoService = serviceFactory.GetVideoService();
-
         _audioService = serviceFactory.GetAudioService();
         _settingsService = serviceFactory.GetSettingsService();
-
-        _toggle = false;
-
-
         
         _player = player;
         _image = playerImage;
-        firstFrame = true;
+        _firstFrame = true;
         _image.SizeTo(new Vector2(16, 32));
         
         _run[0] = "Assets/Images/Player/Run/Player_Run_0.png";
@@ -64,8 +58,7 @@ public class AnimatePlayerAction : Action
         Camera camera = scene.GetFirstActor<Camera>("camera");
         Actor world = camera.GetWorld();
         string bounceSound = _settingsService.GetString("bounceSound");
-
-
+        
         if (_player.GetPlayerState() == PlayerState.Idle)
         {
             _image.MoveTo(_player.GetPosition());
@@ -84,9 +77,9 @@ public class AnimatePlayerAction : Action
         
         else if (_player.GetPlayerState() == PlayerState.Attacking)
         {
-            if (firstFrame)
+            if (_firstFrame)
             {
-                firstFrame = false;
+                _firstFrame = false;
                 _image.ResetFrame();
                 _image.Animate(_attack, 0.5f, 60, true);
                 _audioService.PlaySound(bounceSound);
@@ -99,7 +92,7 @@ public class AnimatePlayerAction : Action
         
         if(_player.GetPlayerState() != PlayerState.Attacking)
         {
-            firstFrame = true;
+            _firstFrame = true;
         }
         
         _videoService.Draw(_image, camera, _player.IsMovingRight());

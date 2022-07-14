@@ -36,7 +36,7 @@ namespace CSE210_Final.Game.Scripting
             foreach (Skeleton skeleton in allSkeletons)
             {
                // Don't check with self
-               if(skeleton != currentSkeleton)
+               if(skeleton != currentSkeleton && skeleton.GetEnabled())
                {
                   // Get the position of the other skeleton
                   Vector2 otherSkeletonPosition = skeleton.GetPosition();

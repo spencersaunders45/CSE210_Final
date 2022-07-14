@@ -5,5 +5,7 @@
   "screenHeight": 480,
   "backgroundMusic": "Assets/Audio/Music/nightshade.mp3",
   "swordSwish": "Assets/Audio/SFX/Player_Attack01.wav",
-  "bounceSound": "Assets/Audio/SFX/Player_Attack01.wav"
+  "bounceSound": "Assets/Audio/SFX/Player_Attack01.wav",
+  "skeleton_damage_sound": "Assets/Audio/SFX/Skeleton_Damage02.wav",
+  "skeleton_death_sound": "Assets/Audio/SFX/Skeleton_Death01.wav"
 }

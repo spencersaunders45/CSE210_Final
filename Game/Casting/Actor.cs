@@ -15,10 +15,12 @@ namespace CSE210_Final.Game.Casting
         private float _scale = 1f;
         private Vector2 _size = Vector2.Zero;
         private Color _tint = Color.White();
+        private Color _originalColor;
         private Vector2 _velocity = Vector2.Zero;
         protected int _health;
-        
-        public Actor() { }
+
+        public Actor()
+        { _originalColor = _tint; }
 
         public virtual bool BounceIn(Actor region)
         {
@@ -49,6 +51,11 @@ namespace CSE210_Final.Game.Casting
         public bool GetEnabled()
         {
             return _enabled;
+        }
+
+        public Color GetOriginalColor()
+        {
+            return _originalColor;
         }
 
         public virtual void ClampTo(Actor region)

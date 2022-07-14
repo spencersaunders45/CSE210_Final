@@ -51,7 +51,7 @@ public class GameSceneLoader : SceneLoader
         back.Display("press 'enter' to go back to main screen");
         back.MoveTo(0, 0);
         back.Align(Label.Left);
-        
+
         scene.Clear();
 
 
@@ -108,5 +108,4 @@ public class GameSceneLoader : SceneLoader
         scene.AddAction(Phase.Update, skeletonHandler);
     }
 
-    
 }

@@ -46,6 +46,11 @@ namespace CSE210_Final.Game.Casting
             return bounced;
         }
 
+        public bool GetEnabled()
+        {
+            return _enabled;
+        }
+
         public virtual void ClampTo(Actor region)
         {
             Validator.CheckNotNull(region);

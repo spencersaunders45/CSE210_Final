@@ -55,8 +55,10 @@ namespace CSE210_Final.Game.Scripting
                }
             }
             
+            currentSkeleton.SetKnockback(Vector2.Lerp(currentSkeleton.GetKnockback(), Vector2.Zero, 0.25f));
+            
             // Move the skeleton
-            currentSkeleton.Steer(targetDir - avoidDir);
+            currentSkeleton.Steer((targetDir - avoidDir) - currentSkeleton.GetKnockback());
             currentSkeleton.Move();
          }
       }

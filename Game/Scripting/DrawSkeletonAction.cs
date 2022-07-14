@@ -38,9 +38,12 @@ public class DrawSkeletonAction : Action
 
         foreach (Skeleton skeleton in _skeletons)
         {
-            skeleton.UpdateImage();
-            skeleton.GetImage().Animate(_run, 0.5f, 60);
-            _videoService.Draw(skeleton.GetImage(), camera);
+            if(skeleton.GetEnabled())
+            {
+                skeleton.UpdateImage();
+                skeleton.GetImage().Animate(_run, 0.5f, 60);
+                _videoService.Draw(skeleton.GetImage(), camera);
+            }
         }
         
         if(_boss != null)

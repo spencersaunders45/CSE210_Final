@@ -15,6 +15,12 @@ namespace CSE210_Final.Game.Casting
       private static System.Timers.Timer respawnTimer;
       private Image _image;
       private Scene _scene;
+      
+      // When damaged
+      private Vector2 _knockbackVector;
+      private float _knockbackDistance;
+
+
       public Skeleton(float x, float y , Vector2 size, Color color, int health, Scene scene)
       {
          Tint(color);
@@ -27,6 +33,10 @@ namespace CSE210_Final.Game.Casting
          _startY = y;
          RespawnTimer();
          _scene = scene;
+         
+         _knockbackVector = Vector2.Zero;
+         _knockbackDistance = 24;
+
       }
 
    public void UpdateImage()
@@ -49,16 +59,31 @@ namespace CSE210_Final.Game.Casting
 
    private void CheckHealth()
       {
-         if (_health == 0)
+         if (_health <= 0)
          {
-            _disabled = true;
+            Disable();
          }
       }
 
-      public void DealDamage(int damage)
+      public void DealDamage(int damage, Vector2 damagePos)
       {
          _health -= damage;
+         
+         // Set up knockback
+         _knockbackVector = damagePos - GetCenter();
+         _knockbackVector = Vector2.Normalize(_knockbackVector) * _knockbackDistance;
+         
          CheckHealth();
+      }
+
+      public Vector2 GetKnockback()
+      {
+         return _knockbackVector;
+      }
+
+      public void SetKnockback(Vector2 newKnockback)
+      {
+         _knockbackVector = newKnockback;
       }
 
       private void RespawnTimer()
@@ -72,7 +97,7 @@ namespace CSE210_Final.Game.Casting
 
       private void StartRespawn(Object source, ElapsedEventArgs e)
       {
-         if(_health == 0)
+         if(_health <= 0)
          {
             checkDeath.Enabled = false;
             // Runs every 30 seconds

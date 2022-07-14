@@ -60,7 +60,7 @@ public class GameSceneLoader : SceneLoader
         for(int i = 0; i < 8; i++)
         {
             int[] location = Constants.SEKELETON_LOCATIONS[i];
-            Skeleton skeleton = new Skeleton(location[0], location[1], Vector2.One * 24, Color.Green(), 16, scene);
+            Skeleton skeleton = new Skeleton(location[0], location[1], Vector2.One * 24, Color.Green(), 3, scene);
             scene.AddActor("skeleton" , skeleton);
         }
 

@@ -123,7 +123,17 @@ public class PlayerController : Actor
         }
 
         if (keyboardService.IsKeyDown(KeyboardKey.Space) && !_isAttacking && _attackTimer == 0)
+        {
             _isAttacking = true;
+
+            foreach (Skeleton skeleton in _currentScene.GetAllActors<Skeleton>("skeleton"))
+            {
+                if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 50)
+                {
+                    skeleton.DealDamage(1, GetCenter());
+                }
+            }
+        }
 
         if (_isAttacking)
         {

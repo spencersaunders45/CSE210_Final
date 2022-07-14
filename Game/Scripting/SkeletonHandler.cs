@@ -15,6 +15,8 @@ namespace CSE210_Final.Game.Scripting
       {
          Actor player = scene.GetFirstActor("player");
          List<Skeleton> allSkeletons = scene.GetAllActors<Skeleton>("skeleton");
+         List<Skeleton> boss = scene.GetAllActors<Skeleton>("boss");
+         MoveTowardsPlayer(boss, player, scene);
          MoveTowardsPlayer(allSkeletons, player, scene);
       }
 

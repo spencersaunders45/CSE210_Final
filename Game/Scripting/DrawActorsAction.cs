@@ -40,12 +40,6 @@ namespace CSE210_Final.Game.Scripting
                 foreach (Label label in labels)
                 {_videoService.Draw(label);}
                 
-                //Draw Skeletons
-                // foreach (Skeleton skeleton in skeletons)
-                // {_videoService.Draw(skeleton);}
-                // if(boss != null)
-                //     _videoService.Draw(boss);
-                
                 _videoService.FlushBuffer();
             }
             catch (Exception exception)

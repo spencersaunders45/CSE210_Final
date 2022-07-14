@@ -125,7 +125,7 @@ public class PlayerController : Actor
         if (keyboardService.IsKeyDown(KeyboardKey.Space) && !_isAttacking && _attackTimer == 0)
         {
             _isAttacking = true;
-
+            // Attack regular skeletons
             foreach (Skeleton skeleton in _currentScene.GetAllActors<Skeleton>("skeleton"))
             {
                 if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 50 && skeleton.GetEnabled())
@@ -133,6 +133,12 @@ public class PlayerController : Actor
                     skeleton.DealDamage(1, GetCenter());
                 }
             }
+            // Attack Boss
+            Skeleton boss = _currentScene.GetFirstActor<Skeleton>("boss");
+            if (Vector2.Distance(GetCenter(), boss.GetCenter()) < 50 && boss.GetEnabled())
+                {
+                    boss.DealDamage(1, GetCenter());
+                }
         }
 
         if (_isAttacking)

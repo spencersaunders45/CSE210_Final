@@ -128,7 +128,7 @@ public class PlayerController : Actor
 
             foreach (Skeleton skeleton in _currentScene.GetAllActors<Skeleton>("skeleton"))
             {
-                if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 50)
+                if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 50 && skeleton.GetEnabled())
                 {
                     skeleton.DealDamage(1, GetCenter());
                 }

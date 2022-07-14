@@ -211,6 +211,27 @@ namespace CSE210_Final.Game.Casting
                 && this.GetTop() <= point.Y && this.GetBottom() >= point.Y);
         }
 
+        public virtual Color LerpColor(Color a, Color b, float t)
+        {
+            float r1 = a.ToTuple().Item1;
+            float g1 = a.ToTuple().Item2;
+            float b1 = a.ToTuple().Item3;
+            
+            float r2 = b.ToTuple().Item1;
+            float g2 = b.ToTuple().Item2;
+            float b2 = b.ToTuple().Item3;
+            
+            // t = % of color b.
+
+            float r3 = r1 + (r2 - r1) * t;
+            float g3 = g1 + (g2 - g1) * t;
+            float b3 = b1 + (b2 - b1) * t;
+
+            Color newColor = new Color((byte) r3, (byte) g3, (byte) b3, 255);
+
+            return newColor;
+        }
+
         public virtual void Rotate(float degrees)
         {
             _rotation += degrees;

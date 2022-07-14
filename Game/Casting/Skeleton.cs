@@ -12,7 +12,7 @@ namespace CSE210_Final.Game.Casting
       float _startX;
       float _startY;
       int _startHealth;
-      private static System.Timers.Timer respawnTimer;
+      private System.Timers.Timer respawnTimer;
       private Image _image;
       private Scene _scene;
       
@@ -104,7 +104,6 @@ namespace CSE210_Final.Game.Casting
 
       private void StartRespawn()
       {
-         Disable();
          // Runs every 30 seconds
          respawnTimer = new System.Timers.Timer(3000);
          respawnTimer.Elapsed += Respawn;

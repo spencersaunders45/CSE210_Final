@@ -45,10 +45,10 @@ public class DrawSkeletonAction : Action
                 _videoService.Draw(skeleton.GetImage(), camera);
 
                 //TODO: Lerp color values here
-                // if (skeleton.GetTint() != Color.White())
-                // {
-                //     skeleton.Tint(new Color());
-                // }
+                if (skeleton.GetTint() != Color.White())
+                {
+                    skeleton.Tint(skeleton.LerpColor(skeleton.GetTint(), Color.White(), 0.15f));
+                }
             }
         }
         

@@ -15,6 +15,7 @@ namespace CSE210_Final.Game.Casting
       private System.Timers.Timer respawnTimer;
       private Image _image;
       private Scene _scene;
+      private bool deathFirstFrame;
       
       // When damaged
       private Vector2 _knockbackVector;
@@ -41,11 +42,13 @@ namespace CSE210_Final.Game.Casting
          _audioService = serviceFactory.GetAudioService();
          _damageSound = _settingsService.GetString("skeleton_damage_sound");
          _deathSound = _settingsService.GetString("skeleton_death_sound");
+         deathFirstFrame = true;
          
          _knockbackVector = Vector2.Zero;
          _knockbackDistance = 24;
 
       }
+      
 
    public void UpdateImage()
    {
@@ -77,6 +80,16 @@ namespace CSE210_Final.Game.Casting
          {
             _audioService.PlaySound(_damageSound);
          }
+      }
+   
+      public bool GetDeathFirstFrame()
+      {
+         return deathFirstFrame;
+      }
+
+      public void SetDeathFirstFrame(bool a)
+      {
+         deathFirstFrame = a;
       }
 
       public void DealDamage(int damage, Vector2 damagePos)

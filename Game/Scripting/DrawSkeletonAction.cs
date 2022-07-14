@@ -9,6 +9,7 @@ public class DrawSkeletonAction : Action
     private Skeleton _boss;
     private string[] _idle = new string[6];
     private string[] _run = new string[6];
+    private string[] _death = new string[6];
     private IVideoService _videoService;
 
     public DrawSkeletonAction(IServiceFactory serviceFactory)
@@ -36,20 +37,42 @@ public class DrawSkeletonAction : Action
         _run[4] = "Assets/Images/Skeleton/Run/Skeleton_Run_4.png";
         _run[5] = "Assets/Images/Skeleton/Run/Skeleton_Run_5.png";
 
+        _death[0] = "Assets/Images/Skeleton/Death/Skeleton_Death_0.png";
+        _death[1] = "Assets/Images/Skeleton/Death/Skeleton_Death_1.png";
+        _death[2] = "Assets/Images/Skeleton/Death/Skeleton_Death_2.png";
+        _death[3] = "Assets/Images/Skeleton/Death/Skeleton_Death_3.png";
+        _death[4] = "Assets/Images/Skeleton/Death/Skeleton_Death_4.png";
+        _death[5] = "Assets/Images/Skeleton/Death/Skeleton_Death_4.png";
+        
+        
+
         foreach (Skeleton skeleton in _skeletons)
         {
             if(skeleton.GetEnabled())
             {
+                skeleton.SetDeathFirstFrame(true);
                 skeleton.UpdateImage();
                 skeleton.GetImage().Animate(_run, 0.5f, 60);
-                _videoService.Draw(skeleton.GetImage(), camera);
-
-                //TODO: Lerp color values here
-                if (skeleton.GetTint() != Color.White())
+            }
+            
+            if(!skeleton.GetEnabled())
+            {
+                if (skeleton.GetDeathFirstFrame())
                 {
-                    skeleton.Tint(skeleton.LerpColor(skeleton.GetTint(), Color.White(), 0.15f));
+                    skeleton.SetDeathFirstFrame(false);
+                    //skeleton.UpdateImage();
+                    Console.WriteLine("Skeleton DEAD!!");
+                    skeleton.GetImage().Animate(_death, 1f, 60, false);
+                    skeleton.GetImage().ResetFrame();
                 }
             }
+            
+            if (skeleton.GetTint() != Color.White())
+            {
+                skeleton.Tint(skeleton.LerpColor(skeleton.GetTint(), Color.White(), 0.15f));
+            }
+            
+            _videoService.Draw(skeleton.GetImage(), camera);
         }
         
         if(_boss != null)

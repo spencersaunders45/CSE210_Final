@@ -29,6 +29,15 @@ public class PlayerController : Actor
     private bool _isMovingY;
     private bool _isMovingH;
     
+    // health & damage stuff
+    private Vector2 _knockbackVector;
+    private float _knockbackAmount;
+    private int _health;
+    private Vector2 _hitPosition;
+    private float _attackInitiationTime;
+    private float _attackInitiationTimer;
+    private float _hitboxRadius;
+    private bool _canAttack;
     private bool _isAttacking;
     private float _attackTimer;
     private float _maxAttackTime;
@@ -40,12 +49,17 @@ public class PlayerController : Actor
         MoveTo(pos);
         SizeTo(size);
         Tint(color);
-        _movementSpeed = 3;
+        _movementSpeed = 2;
         _currentScene = scene;
         _isMovingRight = 1;
         _isAttacking = false;
         _attackTimer = 0;
         _maxAttackTime = 0.25f;
+        _attackInitiationTime = 0.35f;
+        _attackInitiationTimer = 0;
+        _canAttack = true;
+        _hitPosition = new Vector2(16, 0);
+        _hitboxRadius = 32;
     }
 
     public void Update(IServiceFactory serviceFactory)
@@ -122,17 +136,30 @@ public class PlayerController : Actor
             _isMovingH = false;
         }
 
-        if (keyboardService.IsKeyDown(KeyboardKey.Space) && !_isAttacking && _attackTimer == 0)
+        if (keyboardService.IsKeyDown(KeyboardKey.Space) && !_isAttacking && _attackTimer == 0 && _canAttack)
         {
             _isAttacking = true;
+            _canAttack = false;
 
             foreach (Skeleton skeleton in _currentScene.GetAllActors<Skeleton>("skeleton"))
             {
-                if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 50 && skeleton.GetEnabled())
+                if (Vector2.Distance(GetCenter() + new Vector2(_hitPosition.X * _isMovingRight, 0), 
+                        skeleton.GetCenter()) < _hitboxRadius && skeleton.GetEnabled())
                 {
                     skeleton.DealDamage(1, GetCenter());
                 }
             }
+        }
+
+        if (!_canAttack)
+        {
+            _attackInitiationTimer += serviceFactory.GetVideoService().GetDeltaTime();
+        }
+
+        if (_attackInitiationTimer >= _attackInitiationTime)
+        {
+            _canAttack = true;
+            _attackInitiationTimer = 0;
         }
 
         if (_isAttacking)

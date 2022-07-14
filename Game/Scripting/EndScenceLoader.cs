@@ -39,20 +39,17 @@ namespace CSE210_Final.Game.Scripting
 
       public void EndScreen(Scene scene, Skeleton boss, Actor player)
       {
-         if(boss != null)
+         if(boss != null && player != null)
          {
-            if(boss.GetHealth() <= 0)
+            if(boss.GetHealth() <= 0 && player.GetHealth() > 0)
             {
                Label winLine1 = WinLine1();
                Label line2 = Line2();
                scene.AddActor("label", winLine1);
                scene.AddActor("label", line2);
             }
-         }
-
-         if(player != null)
-         {
-            if(player.GetHealth() <= 0)
+            
+            if(player.GetHealth() <= 0 && boss.GetHealth() > 0)
             {
                Label loseLine1 = LoseLine1();
                Label line2 = Line2();

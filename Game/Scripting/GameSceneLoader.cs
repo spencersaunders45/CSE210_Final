@@ -21,7 +21,7 @@ public class GameSceneLoader : SceneLoader
          
 
         // Define Actors
-        PlayerController playerController = new PlayerController(Vector2.One * 100, new Vector2(16, 32), Color.Green(), scene);
+        PlayerController playerController = new PlayerController(Vector2.One * 100, new Vector2(16, 32), Color.Green(), scene, 200);
         TitleSceneLoader titleSceneLoader = new TitleSceneLoader(serviceFactory);
         Image playerImage = new Image();
         PlayMusicAction playMusicAction = new PlayMusicAction(serviceFactory);

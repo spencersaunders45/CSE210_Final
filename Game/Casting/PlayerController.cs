@@ -32,7 +32,6 @@ public class PlayerController : Actor
     // health & damage stuff
     private Vector2 _knockbackVector;
     private float _knockbackAmount;
-    private int _health;
     private Vector2 _hitPosition;
     private float _attackInitiationTime;
     private float _attackInitiationTimer;
@@ -44,11 +43,12 @@ public class PlayerController : Actor
     
     private int _isMovingRight;
     
-    public PlayerController(Vector2 pos, Vector2 size, Color color, Scene scene)
+    public PlayerController(Vector2 pos, Vector2 size, Color color, Scene scene, int health)
     {
         MoveTo(pos);
         SizeTo(size);
         Tint(color);
+        _health = health;
         _movementSpeed = 2;
         _currentScene = scene;
         _isMovingRight = 1;

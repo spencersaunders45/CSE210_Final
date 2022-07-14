@@ -31,10 +31,11 @@ namespace CSE210_Final.Game.Scripting
                 List<Label> labels = scene.GetAllActors<Label>("label");
                 _videoService.ClearBuffer();
 
+                Actor player = scene.GetFirstActor<Actor>("player");
                 Skeleton boss = scene.GetFirstActor<Skeleton>("boss");
                 List<Skeleton> skeletons = scene.GetAllActors<Skeleton>("skeleton");
 
-                _endSceneLoader.EndScreen(scene, boss);
+                _endSceneLoader.EndScreen(scene, boss, player);
                 
                 // Draw Walls
                 foreach (SolidWall wall in walls) 

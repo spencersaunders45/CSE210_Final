@@ -10,7 +10,7 @@ namespace CSE210_Final.Game.Scripting
       {
       }
 
-      private Label EndScreneLine1()
+      private Label WinLine1()
       {
          Label Line1 = new Label();
          Line1.Display("Victory!");
@@ -19,7 +19,16 @@ namespace CSE210_Final.Game.Scripting
          return Line1;
       }
 
-      private Label EndScreneLine2()
+      private Label LoseLine1()
+      {
+         Label Line1 = new Label();
+         Line1.Display("You Died");
+         Line1.MoveTo(300, 200);
+         Line1.Align(Label.Center);
+         return Line1;
+      }
+
+      private Label Line2()
       {
          Label Line2 = new Label();
          Line2.Display("Press 'enter' to restart!");
@@ -28,16 +37,27 @@ namespace CSE210_Final.Game.Scripting
          return Line2;
       }
 
-      public void EndScreen(Scene scene, Skeleton boss)
+      public void EndScreen(Scene scene, Skeleton boss, Actor player)
       {
          if(boss != null)
          {
             if(boss.GetHealth() <= 0)
             {
-               Label endLine1 = EndScreneLine1();
-               Label endLine2 = EndScreneLine2();
-               scene.AddActor("label", endLine1);
-               scene.AddActor("label", endLine2);
+               Label winLine1 = WinLine1();
+               Label line2 = Line2();
+               scene.AddActor("label", winLine1);
+               scene.AddActor("label", line2);
+            }
+         }
+
+         if(player != null)
+         {
+            if(player.GetHealth() <= 0)
+            {
+               Label loseLine1 = LoseLine1();
+               Label line2 = Line2();
+               scene.AddActor("label", loseLine1);
+               scene.AddActor("label", line2);
             }
          }
       }

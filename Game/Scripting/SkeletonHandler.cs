@@ -47,7 +47,7 @@ namespace CSE210_Final.Game.Scripting
                      // Set avoid dir
                      avoidDir = otherSkeletonPosition - currentPos; // With vectors, you can do targetPos - currentPos,
                                                                     // which will return a direction towards the target.
-                                                                    
+
                      avoidDir = Vector2.Normalize(avoidDir);        // Normalizing it sets the values of x and y to be
                                                                     // between 0 and 1. This allows us to have more control
                                                                     // over the exact values we want.

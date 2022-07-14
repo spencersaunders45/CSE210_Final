@@ -12,7 +12,6 @@ namespace CSE210_Final.Game.Casting
       float _startX;
       float _startY;
       int _startHealth;
-      private static System.Timers.Timer checkDeath;
       private static System.Timers.Timer respawnTimer;
       private Image _image;
       private Scene _scene;
@@ -36,7 +35,6 @@ namespace CSE210_Final.Game.Casting
          _disabled = false;
          _startX = x;
          _startY = y;
-         RespawnTimer();
          _scene = scene;
 
          _settingsService = serviceFactory.GetSettingsService();
@@ -72,6 +70,7 @@ namespace CSE210_Final.Game.Casting
          if (_health <= 0)
          {
             Disable();
+            StartRespawn();
             _audioService.PlaySound(_deathSound);
          }
          else
@@ -103,34 +102,23 @@ namespace CSE210_Final.Game.Casting
          _knockbackVector = newKnockback;
       }
 
-      private void RespawnTimer()
+      private void StartRespawn()
       {
-         // Runs every 1 seconds
-         checkDeath = new System.Timers.Timer(1000);
-         checkDeath.Elapsed += StartRespawn;
-         checkDeath.AutoReset = true;
-         checkDeath.Enabled = true;
-      }
-
-      private void StartRespawn(Object source, ElapsedEventArgs e)
-      {
-         if(_health <= 0)
-         {
-            checkDeath.Enabled = false;
-            // Runs every 30 seconds
-            respawnTimer = new System.Timers.Timer(30000);
-            respawnTimer.Elapsed += Respawn;
-            respawnTimer.AutoReset = true;
-            respawnTimer.Enabled = true;
-         }
+         Disable();
+         // Runs every 30 seconds
+         respawnTimer = new System.Timers.Timer(3000);
+         respawnTimer.Elapsed += Respawn;
+         respawnTimer.AutoReset = false;
+         respawnTimer.Enabled = true;
       }
 
       private void Respawn(Object source, ElapsedEventArgs e)
       {
+         Enable();
          MoveTo(_startX, _startY);
          _health = _startHealth;
          respawnTimer.Enabled = false;
-         checkDeath.Enabled = true;
       }
+
    }
 }

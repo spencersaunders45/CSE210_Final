@@ -53,6 +53,11 @@ namespace CSE210_Final.Game.Casting
             return _enabled;
         }
 
+        public int GetHealth()
+        {
+            return _health;
+        }
+
         public Color GetOriginalColor()
         {
             return _originalColor;

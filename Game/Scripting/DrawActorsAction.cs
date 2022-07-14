@@ -13,10 +13,13 @@ namespace CSE210_Final.Game.Scripting
     public class DrawActorsAction : CSE210_Final.Game.Scripting.Action
     {
         private IVideoService _videoService;
+
+        private EndSceneLoader _endSceneLoader = new EndSceneLoader();
         
         public DrawActorsAction(IServiceFactory serviceFactory)
         {
             _videoService = serviceFactory.GetVideoService();
+
         }
 
         public override void Execute(Scene scene, float deltaTime, IActionCallback callback)
@@ -26,7 +29,7 @@ namespace CSE210_Final.Game.Scripting
                 Camera camera = scene.GetFirstActor<Camera>("camera");
 
                 // Background background = scene.GetFirstActor<Background>("background");
-        // Actor world = camera.GetWorld();
+                
                 List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
                 List<Label> labels = scene.GetAllActors<Label>("label");
 
@@ -38,10 +41,12 @@ namespace CSE210_Final.Game.Scripting
                 // _videoService.Draw(background, camera);
 
 
+                Actor player = scene.GetFirstActor<Actor>("player");
                 Skeleton boss = scene.GetFirstActor<Skeleton>("boss");
                 List<Skeleton> skeletons = scene.GetAllActors<Skeleton>("skeleton");
 
-                
+                _endSceneLoader.EndScreen(scene, boss, player);
+
                 
                 // Draw Walls
                 foreach (SolidWall wall in walls) 
@@ -62,6 +67,11 @@ namespace CSE210_Final.Game.Scripting
         private void DrawSkeletons(Skeleton skeleton)
         {
             _videoService.Draw(skeleton);
+        }
+
+        private void CheckForGameOver()
+        {
+
         }
     }
 }

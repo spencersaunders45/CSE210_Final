@@ -140,14 +140,21 @@ public class PlayerController : Actor
         {
             _isAttacking = true;
             _canAttack = false;
-
+            Vector2 hitPos = new Vector2(_hitPosition.X * _isMovingRight, 0);
+            // Attack regular skeletons
             foreach (Skeleton skeleton in _currentScene.GetAllActors<Skeleton>("skeleton"))
             {
-                if (Vector2.Distance(GetCenter() + new Vector2(_hitPosition.X * _isMovingRight, 0), 
+                if (Vector2.Distance(GetCenter() + hitPos, 
                         skeleton.GetCenter()) < _hitboxRadius && skeleton.GetEnabled())
                 {
                     skeleton.DealDamage(1, GetCenter());
                 }
+            }
+            // Attack Boss
+            Skeleton boss = _currentScene.GetFirstActor<Skeleton>("boss");
+            if (Vector2.Distance(GetCenter() + hitPos, boss.GetCenter()) < _hitboxRadius && boss.GetEnabled())
+            {
+                boss.DealDamage(1, GetCenter());
             }
         }
 

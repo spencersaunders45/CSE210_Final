@@ -12,6 +12,7 @@ namespace CSE210_Final.Game.Casting
       float _startX;
       float _startY;
       int _startHealth;
+      bool _isBoss;
       private System.Timers.Timer respawnTimer;
       private Image _image;
       private Scene _scene;
@@ -26,7 +27,7 @@ namespace CSE210_Final.Game.Casting
       private IAudioService _audioService;
 
 
-      public Skeleton(float x, float y , Vector2 size, Color color, int health, Scene scene, IServiceFactory serviceFactory)
+      public Skeleton(float x, float y , Vector2 size, Color color, int health, Scene scene, IServiceFactory serviceFactory, bool isBoss)
       {
          Tint(color);
          MoveTo(x, y);
@@ -37,6 +38,7 @@ namespace CSE210_Final.Game.Casting
          _startX = x;
          _startY = y;
          _scene = scene;
+         _isBoss = isBoss;
 
          _settingsService = serviceFactory.GetSettingsService();
          _audioService = serviceFactory.GetAudioService();
@@ -70,7 +72,12 @@ namespace CSE210_Final.Game.Casting
 
    private void CheckHealth()
       {
-         if (_health <= 0)
+         if (_isBoss == true && _health <= 0)
+         {
+            Disable();
+            _audioService.PlaySound(_deathSound);
+         }
+         else if (_health <= 0)
          {
             Disable();
             StartRespawn();

@@ -69,7 +69,7 @@ public class GameSceneLoader : SceneLoader
 
         
         // Add Skeletons
-        Skeleton boss = new Skeleton(500, 340, Vector2.One * 24, Color.Red(), 16, scene, serviceFactory, true);
+        Skeleton boss = new Skeleton(1070, 286, Vector2.One * 24, Color.Red(), 16, scene, serviceFactory, true);
         scene.AddActor("boss" , boss);
         for(int i = 0; i < 8; i++)
         {
@@ -100,9 +100,35 @@ public class GameSceneLoader : SceneLoader
             scene.AddActor("wall", new SolidWall(new Vector2(530, (i * 32) + 300), Vector2.One * 32, Color.Purple(), scene));
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 11; i++)
         {
-            scene.AddActor("wall", new SolidWall(new Vector2(1000, (i * 32)), Vector2.One * 32, Color.Purple(), scene));
+            scene.AddActor("wall", new SolidWall(new Vector2(710, (i * 32)), Vector2.One * 32, Color.Purple(), scene));
+        }
+        for (int i = 0; i < 11; i++)
+        {
+            scene.AddActor("wall", new SolidWall(new Vector2(910, (i * 32) + 350), Vector2.One * 32, Color.Purple(), scene));
+        }
+
+        for (int i = 0; i < 8; i++)
+        {
+            scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 710, 164), Vector2.One * 32, Color.Purple(), scene));
+        }
+        for (int i = 0; i < 12; i++)
+        {
+            scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 540, 520), Vector2.One * 32, Color.Purple(), scene));
+        }
+        for (int i = 0; i < 12; i++)
+        {
+            scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 920, 420), Vector2.One * 32, Color.Purple(), scene));
+        }
+
+        for (int i = 0; i < 12; i++)
+        {
+            scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 920, 100), Vector2.One * 32, Color.Purple(), scene));
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            scene.AddActor("wall", new SolidWall(new Vector2(940, (i * 32) + 100), Vector2.One * 32, Color.Purple(), scene));
         }
 
         SkeletonHandler skeletonHandler = new SkeletonHandler();
@@ -113,8 +139,6 @@ public class GameSceneLoader : SceneLoader
         scene.AddAction(Phase.Output, playMusicAction);
         scene.AddAction(Phase.Output, drawActorsAction);
         scene.AddAction(Phase.Output, animatePlayerAction);
-        // scene.AddAction(Phase.Output, drawImageAction);
-        // scene.AddAction(Phase.Output, drawActorsAction);
         scene.AddAction(Phase.Output, drawSkeletonAction);
         scene.AddAction(Phase.Update, skeletonHandler);
     }

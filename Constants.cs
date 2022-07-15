@@ -9,14 +9,18 @@ namespace CSE210_Final
       public static int FRAME_RATE = 60;
 
       // SKELETON SPAWN LOCATIONS
-      private static int[] location1 = {0, 10};
-      private static int[] location2 = {25, 30};
-      private static int[] location3 = {45, 50};
-      private static int[] location4 = {65 ,70};
-      private static int[] location5 = {85, 90};
-      private static int[] location6 = {105, 110};
-      private static int[] location7 = {125, 130};
-      private static int[] location8 = {145, 150};
+      private static int[] location1 = {225, 765};
+      private static int[] location2 = {225, 775};
+      
+      private static int[] location3 = {445, 775};
+      private static int[] location4 = {445 ,765};
+
+      private static int[] location5 = {450, 211};
+      private static int[] location6 = {450, 220};
+
+      private static int[] location7 = {630, 200};
+      private static int[] location8 = {630, 210};
+
       public static int[][] SEKELETON_LOCATIONS = {location1, location2, location3, location4, location5, location6, location7, location8,};
 
       // SCREEN

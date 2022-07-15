@@ -30,7 +30,7 @@ public class AnimatePlayerAction : Action
         _image = playerImage;
         _firstFrame = true;
         _image.SizeTo(new Vector2(16, 32));
-        
+         
         _run[0] = "Assets/Images/Player/Run/Player_Run_0.png";
         _run[1] = "Assets/Images/Player/Run/Player_Run_1.png";
         _run[2] = "Assets/Images/Player/Run/Player_Run_2.png";

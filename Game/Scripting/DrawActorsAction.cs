@@ -52,8 +52,8 @@ namespace CSE210_Final.Game.Scripting
 
                 
                 // Draw Walls
-                foreach (SolidWall wall in walls) 
-                { _videoService.Draw(wall, camera); }
+                // foreach (SolidWall wall in walls) 
+                // { _videoService.Draw(wall, camera); }
                 
                 // Draw Labels
                 foreach (Label label in labels)

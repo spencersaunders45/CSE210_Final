@@ -77,9 +77,9 @@ public class GameSceneLoader : SceneLoader
             Skeleton skeleton = new Skeleton(location[0], location[1], Vector2.One * 24, Color.Green(), 3, scene, serviceFactory, false);
             scene.AddActor("skeleton" , skeleton);
         }
-            Label status = new Label();
-            status.Display("x:-, y:-");
-            status.MoveTo(25, 55);
+            // Label status = new Label();
+            // status.Display("x:-, y:-");
+            // status.MoveTo(25, 55);
 
         // Add Walls
         // for (int i = 0; i < 8; i++)

@@ -18,7 +18,6 @@ public class GameSceneLoader : SceneLoader
     {
         IServiceFactory serviceFactory = GetServiceFactory();
         serviceFactory.GetVideoService().SetBackground(Color.Black());
-         
 
         // Define Actors
         PlayerController playerController = new PlayerController(Vector2.One * 100, new Vector2(16, 32), Color.Green(), scene, 200);
@@ -43,10 +42,6 @@ public class GameSceneLoader : SceneLoader
         background.SizeTo(1280, 960);
         background.MoveTo(0, 0);
         background.Display("Assets/Images/background/GameScreen.png");
-
-
-        
-        
 
         back.Display("press 'enter' to go back to main screen");
         back.MoveTo(0, 0);

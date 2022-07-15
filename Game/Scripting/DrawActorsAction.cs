@@ -33,9 +33,12 @@ namespace CSE210_Final.Game.Scripting
                 List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
                 List<Label> labels = scene.GetAllActors<Label>("label");
 
+                Label status = scene.GetFirstActor<Label>("status");
+
                 // List<Image> background = scene.GetAllActors<Image>("background");
 
                 _videoService.ClearBuffer();
+                _videoService.Draw(status);
                 
 
                 // _videoService.Draw(background, camera);

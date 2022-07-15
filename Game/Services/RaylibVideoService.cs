@@ -42,7 +42,7 @@ namespace CSE210_Final.Game.Services
         public void Draw(Actor actor, Camera camera)
         {
             Actor focus = camera.GetFocus();
-            Actor screen = camera.GetScreen();
+            Actor screen = camera.GetWorld();
 
             if (actor == focus || actor.Overlaps(screen))
             {
@@ -93,7 +93,7 @@ namespace CSE210_Final.Game.Services
         public void Draw(Casting.Image image, Camera camera)
         {
             Actor focus = camera.GetFocus();
-            Actor screen = camera.GetScreen();
+            Actor screen = camera.GetWorld();
 
             if (image == focus || image.Overlaps(screen))
             {
@@ -115,7 +115,7 @@ namespace CSE210_Final.Game.Services
         public void Draw(Casting.Image image, Camera camera, int dir)
         {
             Actor focus = camera.GetFocus();
-            Actor screen = camera.GetScreen();
+            Actor screen = camera.GetWorld();
 
             if (image == focus || image.Overlaps(screen))
             {
@@ -155,7 +155,7 @@ namespace CSE210_Final.Game.Services
         public void Draw(Label label, Camera camera)
         {
             Actor focus = camera.GetFocus();
-            Actor screen = camera.GetScreen();
+            Actor screen = camera.GetWorld();
 
             if (label == focus || label.Overlaps(screen))
             {

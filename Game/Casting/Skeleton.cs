@@ -143,5 +143,12 @@ namespace CSE210_Final.Game.Casting
          aggro = false;
       }
 
+      public int IsMovingRight()
+      {
+         if(GetVelocity().X > 0)
+            return 1;
+         return -1;
+      }
+
    }
 }

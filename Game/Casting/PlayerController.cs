@@ -28,6 +28,7 @@ public class PlayerController : Actor
     private bool _leftCol;
     private bool _isMovingY;
     private bool _isMovingH;
+    private bool _isDead;
     
     // health & damage stuff
     private Vector2 _knockbackVector;
@@ -99,6 +100,7 @@ public class PlayerController : Actor
             if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 14 && skeleton.GetEnabled())
             {
                 DealDamage(1, skeleton.GetCenter(), audioService);
+                CheckDead();
             }
         }
     }
@@ -115,6 +117,14 @@ public class PlayerController : Actor
             _invincibilityTimer = 0;
             _invincible = true;
             audioService.PlaySound(_damageSound);
+        }
+    }
+
+    private void CheckDead()
+    {
+        if (_health <= 0)
+        {
+            _isDead = true;
         }
     }
 
@@ -156,12 +166,12 @@ public class PlayerController : Actor
         }
         
         // Vertical
-        if (keyboardService.IsKeyDown(KeyboardKey.Down) && !_botCol && !_isAttacking) // Down
+        if (keyboardService.IsKeyDown(KeyboardKey.Down) && !_botCol && !_isAttacking && !_isDead) // Down
         {
             _moveY = _movementSpeed;
             _isMovingY = true;
         }
-        else if (keyboardService.IsKeyDown(KeyboardKey.Up) && !_topCol && !_isAttacking) // Up
+        else if (keyboardService.IsKeyDown(KeyboardKey.Up) && !_topCol && !_isAttacking && !_isDead) // Up
         {
             _moveY = -_movementSpeed;
             _isMovingY = true;
@@ -173,13 +183,13 @@ public class PlayerController : Actor
         }
         
         // Horizontal Movement
-        if (keyboardService.IsKeyDown(KeyboardKey.Right) && !_rightCol && !_isAttacking) // Right
+        if (keyboardService.IsKeyDown(KeyboardKey.Right) && !_rightCol && !_isAttacking && !_isDead) // Right
         {
             _moveX = _movementSpeed;
             _isMovingH = true;
             _isMovingRight = 1;
         }
-        else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !_leftCol && !_isAttacking) // Left
+        else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !_leftCol && !_isAttacking && !_isDead) // Left
         {
             _moveX = -_movementSpeed;
             _isMovingH = true;
@@ -208,7 +218,7 @@ public class PlayerController : Actor
 
     private void HandleAttack(IServiceFactory serviceFactory, IKeyboardService keyboardService)
     {
-        if (keyboardService.IsKeyDown(KeyboardKey.Space) && !_isAttacking && _attackTimer == 0 && _canAttack)
+        if (keyboardService.IsKeyDown(KeyboardKey.Space) && !_isAttacking && _attackTimer == 0 && _canAttack && !_isDead)
         {
             _isAttacking = true;
             _canAttack = false;
@@ -264,6 +274,9 @@ public class PlayerController : Actor
         
         if (_isAttacking)
             return PlayerState.Attacking;
+
+        if (_isDead)
+            return PlayerState.Dead;
         
         return PlayerState.Idle;
     }

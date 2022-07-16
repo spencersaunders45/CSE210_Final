@@ -16,9 +16,11 @@ public class AnimatePlayerAction : Action
     private String[] _idle = new String[6];
     private String[] _run = new String[6];
     private String[] _attack = new String[6];
+    private String[] _dead = new String[6];
     private PlayerController _player;
     private Image _image;
-    private bool _firstFrame;
+    private bool _attackFirstFrame;
+    private bool _deadFirstFrame;
 
     public AnimatePlayerAction(IServiceFactory serviceFactory, PlayerController player, Image playerImage)
     {
@@ -28,7 +30,8 @@ public class AnimatePlayerAction : Action
         
         _player = player;
         _image = playerImage;
-        _firstFrame = true;
+        _attackFirstFrame = true;
+        _deadFirstFrame = true;
         _image.SizeTo(new Vector2(16, 32));
          
         _run[0] = "Assets/Images/Player/Run/Player_Run_0.png";
@@ -51,6 +54,13 @@ public class AnimatePlayerAction : Action
         _attack[3] = "Assets/Images/Player/Attack/Player_Attack_3.png";
         _attack[4] = "Assets/Images/Player/Attack/Player_Attack_3.png";
         _attack[5] = "Assets/Images/Player/Attack/Player_Attack_3.png";
+
+        _dead[0] = "Assets/Images/Player/Death/Player_Death_0.png";
+        _dead[1] = "Assets/Images/Player/Death/Player_Death_1.png";
+        _dead[2] = "Assets/Images/Player/Death/Player_Death_2.png";
+        _dead[3] = "Assets/Images/Player/Death/Player_Death_2.png";
+        _dead[4] = "Assets/Images/Player/Death/Player_Death_2.png";
+        _dead[5] = "Assets/Images/Player/Death/Player_Death_2.png";
     }
 
     public override void Execute(Scene scene, float deltaTime, IActionCallback callback)
@@ -77,9 +87,9 @@ public class AnimatePlayerAction : Action
         
         else if (_player.GetPlayerState() == PlayerState.Attacking)
         {
-            if (_firstFrame)
+            if (_attackFirstFrame)
             {
-                _firstFrame = false;
+                _attackFirstFrame = false;
                 _image.ResetFrame();
                 _image.Animate(_attack, 0.5f, 60, true);
                 _audioService.PlaySound(bounceSound);
@@ -90,9 +100,22 @@ public class AnimatePlayerAction : Action
             
         }
         
+        else if (_player.GetPlayerState() == PlayerState.Dead)
+        {
+            _image.MoveTo(_player.GetPosition());
+            _image.ClampTo(world);
+            if(_deadFirstFrame)
+            {
+                _image.ResetFrame();
+                _image.Animate(_dead, 0.85f, 60, false);
+                _deadFirstFrame = true;
+            }
+            _image.SizeTo(new Vector2(16, 32));
+        }
+        
         if(_player.GetPlayerState() != PlayerState.Attacking)
         {
-            _firstFrame = true;
+            _attackFirstFrame = true;
         }
         List<Image> background = scene.GetAllActors<Image>("background");
         _videoService.Draw(background, camera);

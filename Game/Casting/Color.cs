@@ -16,6 +16,7 @@ namespace CSE210_Final.Game.Casting
         public static Color Purple() { return new Color(127, 0, 255); }
         public static Color White() { return new Color(255, 255, 255); }
         public static Color Gray() { return new Color(128, 128, 128); }
+        public static Color Clear() { return new Color(128, 128, 128, 0); }
 
         private byte _red = 0;
         private byte _green = 0;

@@ -1,4 +1,5 @@
-﻿using CSE210_Final.Game.Casting;
+﻿using System.Numerics;
+using CSE210_Final.Game.Casting;
 using CSE210_Final.Game.Services;
 
 namespace CSE210_Final.Game.Scripting;
@@ -52,7 +53,10 @@ public class DrawSkeletonAction : Action
             {
                 skeleton.SetDeathFirstFrame(true);
                 skeleton.UpdateImage();
-                skeleton.GetImage().Animate(_run, 0.5f, 60);
+                if(skeleton.aggro)
+                    skeleton.GetImage().Animate(_run, 0.5f, 60);
+                else
+                    skeleton.GetImage().Animate(_idle, 0.5f, 60);
             }
             
             if(!skeleton.GetEnabled())
@@ -65,14 +69,15 @@ public class DrawSkeletonAction : Action
                     skeleton.GetImage().Animate(_death, 1f, 60, false);
                     skeleton.GetImage().ResetFrame();
                 }
+                skeleton.Tint(skeleton.LerpColor(skeleton.GetTint(), Color.Clear(), 0.75f));
             }
             
-            if (skeleton.GetTint() != Color.White())
+            if (skeleton.GetTint() != Color.White() && skeleton.GetEnabled())
             {
                 skeleton.Tint(skeleton.LerpColor(skeleton.GetTint(), Color.White(), 0.15f));
             }
             
-            _videoService.Draw(skeleton.GetImage(), camera);
+            _videoService.Draw(skeleton.GetImage(), camera, skeleton.IsMovingRight());
         }
         
         if(_boss != null)

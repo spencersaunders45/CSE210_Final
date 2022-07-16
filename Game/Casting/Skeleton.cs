@@ -18,6 +18,7 @@ namespace CSE210_Final.Game.Casting
       private Scene _scene;
       private bool deathFirstFrame;
       public bool aggro;
+      public float speed;
       
       // When damaged
       private Vector2 _knockbackVector;
@@ -41,6 +42,7 @@ namespace CSE210_Final.Game.Casting
          _scene = scene;
          _isBoss = isBoss;
 
+         speed = 1;
          aggro = false;
 
          _settingsService = serviceFactory.GetSettingsService();
@@ -141,6 +143,13 @@ namespace CSE210_Final.Game.Casting
          _health = _startHealth;
          respawnTimer.Enabled = false;
          aggro = false;
+      }
+
+      public int IsMovingRight()
+      {
+         if(GetVelocity().X > 0)
+            return 1;
+         return -1;
       }
 
    }

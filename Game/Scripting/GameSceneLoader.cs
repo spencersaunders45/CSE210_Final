@@ -36,16 +36,16 @@ public class GameSceneLoader : SceneLoader
         DrawActorsAction drawActorsAction = new DrawActorsAction(serviceFactory);
         AnimatePlayerAction animatePlayerAction = new AnimatePlayerAction(serviceFactory, playerController, playerImage);
         DrawSkeletonAction drawSkeletonAction = new DrawSkeletonAction(serviceFactory);
-        Label back = new Label();
+        // Label back = new Label();
 
         Image background = new Image();
         background.SizeTo(1280, 960);
         background.MoveTo(0, 0);
         background.Display("Assets/Images/background/IMAGE_SaveYourDog_Map.png");
 
-        back.Display("press 'enter' to go back to main screen");
-        back.MoveTo(0, 0);
-        back.Align(Label.Left);
+        // back.Display("press 'enter' to go back to main screen");
+        // back.MoveTo(0, 0);
+        // back.Align(Label.Left);
 
         scene.Clear();
 
@@ -64,7 +64,7 @@ public class GameSceneLoader : SceneLoader
 
         scene.AddActor("player-image", playerImage);
         scene.AddActor("player" , playerController);
-        scene.AddActor("label", back);
+        // scene.AddActor("label", back);
         scene.AddActor("camera", camera);
 
         

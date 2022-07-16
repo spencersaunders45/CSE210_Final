@@ -97,7 +97,7 @@ public class PlayerController : Actor
 
         foreach (Skeleton skeleton in skeletons)
         {
-            if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 14 && skeleton.GetEnabled())
+            if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 14 && skeleton.GetEnabled() && _health > 0)
             {
                 DealDamage(1, skeleton.GetCenter(), audioService);
                 CheckDead();

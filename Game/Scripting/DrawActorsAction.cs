@@ -26,38 +26,25 @@ namespace CSE210_Final.Game.Scripting
         {
             try
             {
+                // Camera
                 Camera camera = scene.GetFirstActor<Camera>("camera");
-
-                // Background background = scene.GetFirstActor<Background>("background");
-                
+                // Walls
                 List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
                 List<Label> labels = scene.GetAllActors<Label>("label");
 
-                // Label status = scene.GetFirstActor<Label>("status");
-
-                // List<Image> background = scene.GetAllActors<Image>("background");
-
                 _videoService.ClearBuffer();
-                // _videoService.Draw(status);
-                
 
-                // _videoService.Draw(background, camera);
-
-
+                //Entities
                 Actor player = scene.GetFirstActor<Actor>("player");
                 Skeleton boss = scene.GetFirstActor<Skeleton>("boss");
                 List<Skeleton> skeletons = scene.GetAllActors<Skeleton>("skeleton");
-
+                //Game over label
                 _endSceneLoader.EndScreen(scene, boss, player);
-
-                
-                // Draw Walls
-                 // foreach (SolidWall wall in walls) 
-                 // { _videoService.Draw(wall, camera); }
-                
+                //Player health label
+                PlayerHealthLabel(scene);
+                DrawHealthLabel(scene);
                 // Draw Labels
-                foreach (Label label in labels)
-                {_videoService.Draw(label);}
+                DrawLabels(labels);
                 
                 _videoService.FlushBuffer();
             }
@@ -72,9 +59,29 @@ namespace CSE210_Final.Game.Scripting
             _videoService.Draw(skeleton);
         }
 
-        private void CheckForGameOver()
-        {
+        private void PlayerHealthLabel(Scene scene)
+        {  
+            int playerHealth = scene.GetFirstActor<PlayerController>("player").GetHealth();
+            string newHealth = playerHealth.ToString();
+            Label health = new Label();
+            health.Display("Health: " + newHealth);
+            health.MoveTo(0, 0);
+            health.Align(Label.Left);
+            scene.AddActor("health", health);
+        }
 
+        private void DrawHealthLabel(Scene scene)
+        {
+            List<Label> healthList = scene.GetAllActors<Label>("health");
+            int length = healthList.Count;
+            Label health = healthList[length-1];
+            _videoService.Draw(health);
+        }
+
+        private void DrawLabels(List<Label> labels)
+        {
+            foreach (Label label in labels)
+            {_videoService.Draw(label);}
         }
     }
 }

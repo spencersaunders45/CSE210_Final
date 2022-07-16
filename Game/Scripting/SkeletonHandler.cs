@@ -8,8 +8,12 @@ namespace CSE210_Final.Game.Scripting
 
       public SkeletonHandler()
       {
-         
+         _normalSpeed = 1;
+         _slowSpeed = 0.25f;
       }
+
+      private readonly float _normalSpeed;
+      private readonly float _slowSpeed;
 
       public override void Execute(Scene scene, float deltaTime, IActionCallback callback)
       {
@@ -61,10 +65,22 @@ namespace CSE210_Final.Game.Scripting
 
             if (!currentSkeleton.aggro && Vector2.Distance(playerLocation, currentSkeleton.GetCenter()) < 176)
                currentSkeleton.aggro = true;
+
+            List<SolidWall> walls = scene.GetAllActors<SolidWall>("wall");
+            foreach(SolidWall wall in walls)
+            {
+               if(wall.Overlaps(currentSkeleton.GetCenter()))
+               {
+                  currentSkeleton.speed = _slowSpeed;
+                  break;
+               }
+               else
+                  currentSkeleton.speed = _normalSpeed;
+            }
             
             // Move the skeleton
             if(currentSkeleton.aggro)
-               currentSkeleton.Steer((targetDir - avoidDir) - currentSkeleton.GetKnockback());
+               currentSkeleton.Steer(((targetDir - avoidDir) * currentSkeleton.speed) - currentSkeleton.GetKnockback());
             else
                currentSkeleton.Steer(Vector2.Zero);
             currentSkeleton.Move();

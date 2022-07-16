@@ -21,7 +21,7 @@ public class GameSceneLoader : SceneLoader
          
 
         // Define Actors
-        PlayerController playerController = new PlayerController(Vector2.One * 220, new Vector2(16, 32), Color.Green(), scene, 200);
+        PlayerController playerController = new PlayerController(Vector2.One * 220, new Vector2(16, 32), Color.Green(), scene, 5);
         TitleSceneLoader titleSceneLoader = new TitleSceneLoader(serviceFactory);
         Image playerImage = new Image();
         PlayMusicAction playMusicAction = new PlayMusicAction(serviceFactory);
@@ -72,12 +72,6 @@ public class GameSceneLoader : SceneLoader
         // Add Skeletons
         Skeleton boss = new Skeleton(1070, 286, Vector2.One * 24, Color.Red(), 16, scene, serviceFactory, true);
         scene.AddActor("boss" , boss);
-        // for(int i = 0; i < 8; i++)
-        // {
-        //     int[] location = Constants.SEKELETON_LOCATIONS[i];
-        //     Skeleton skeleton = new Skeleton(location[0], location[1], Vector2.One * 24, Color.Green(), 3, scene, serviceFactory, false);
-        //     scene.AddActor("skeleton" , skeleton);
-        // }
         
         //Populate level w/ walls
         // 0, 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 35, 40, 41, 42, 43, 44, 45, 50, 51, 52, 53, 54, 55
@@ -112,47 +106,6 @@ public class GameSceneLoader : SceneLoader
                 }
             }
         }
-        
-        // for (int i = 0; i < 20; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2(330, (i * 32)), Vector2.One * 32, Color.Purple(), scene));
-        // }
-        //
-        // for (int i = 0; i < 23; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2(530, (i * 32) + 300), Vector2.One * 32, Color.Purple(), scene));
-        // }
-        //
-        // for (int i = 0; i < 11; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2(710, (i * 32)), Vector2.One * 32, Color.Purple(), scene));
-        // }
-        // for (int i = 0; i < 11; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2(910, (i * 32) + 350), Vector2.One * 32, Color.Purple(), scene));
-        // }
-        //
-        // for (int i = 0; i < 8; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 710, 164), Vector2.One * 32, Color.Purple(), scene));
-        // }
-        // for (int i = 0; i < 12; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 540, 520), Vector2.One * 32, Color.Purple(), scene));
-        // }
-        // for (int i = 0; i < 12; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 920, 420), Vector2.One * 32, Color.Purple(), scene));
-        // }
-        //
-        // for (int i = 0; i < 12; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2((i * 32) + 920, 100), Vector2.One * 32, Color.Purple(), scene));
-        // }
-        // for (int i = 0; i < 3; i++)
-        // {
-        //     scene.AddActor("wall", new SolidWall(new Vector2(940, (i * 32) + 100), Vector2.One * 32, Color.Purple(), scene));
-        // }
 
         SkeletonHandler skeletonHandler = new SkeletonHandler();
         

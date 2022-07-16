@@ -69,9 +69,10 @@ public class DrawSkeletonAction : Action
                     skeleton.GetImage().Animate(_death, 1f, 60, false);
                     skeleton.GetImage().ResetFrame();
                 }
+                skeleton.Tint(skeleton.LerpColor(skeleton.GetTint(), Color.Clear(), 0.75f));
             }
             
-            if (skeleton.GetTint() != Color.White())
+            if (skeleton.GetTint() != Color.White() && skeleton.GetEnabled())
             {
                 skeleton.Tint(skeleton.LerpColor(skeleton.GetTint(), Color.White(), 0.15f));
             }

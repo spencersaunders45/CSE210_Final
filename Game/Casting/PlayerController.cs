@@ -31,7 +31,7 @@ public class PlayerController : Actor
     
     // health & damage stuff
     private Vector2 _knockbackVector;
-    private float _knockbackAmount;
+    private float _knockbackDistance;
     private Vector2 _hitPosition;
     private float _attackInitiationTime;
     private float _attackInitiationTimer;
@@ -40,6 +40,10 @@ public class PlayerController : Actor
     private bool _isAttacking;
     private float _attackTimer;
     private float _maxAttackTime;
+    private float _invincibleLength;
+    private float _invincibilityTimer;
+    private bool _invincible;
+    private string _damageSound;
     
     private int _isMovingRight;
     
@@ -60,11 +64,62 @@ public class PlayerController : Actor
         _canAttack = true;
         _hitPosition = new Vector2(16, 0);
         _hitboxRadius = 32;
+
+        _knockbackDistance = 36;
+
+        _invincibleLength = 1.25f;
+        _invincibilityTimer = 0;
+        _invincible = false;
     }
 
     public void Update(IServiceFactory serviceFactory)
     {
         IKeyboardService keyboardService = serviceFactory.GetKeyboardService();
+        
+        HandleMovement(keyboardService);
+        HandleAttack(serviceFactory, keyboardService);
+        HandleInvincibility(serviceFactory);
+        HandleDamage(serviceFactory.GetSettingsService(), serviceFactory.GetAudioService());
+        
+        _knockbackVector = Vector2.Lerp(_knockbackVector, Vector2.Zero, 0.5f);
+        
+        Steer(_moveX - _knockbackVector.X, _moveY - _knockbackVector.Y);
+        Move();
+    }
+
+    private void HandleDamage(ISettingsService settingService, IAudioService audioService)
+    {
+        List<Skeleton> skeletons = _currentScene.GetAllActors<Skeleton>("skeleton");
+        
+        if(_damageSound == null)
+            _damageSound = settingService.GetString("player_damage_sound");
+
+        foreach (Skeleton skeleton in skeletons)
+        {
+            if (Vector2.Distance(GetCenter(), skeleton.GetCenter()) < 14 && skeleton.GetEnabled())
+            {
+                DealDamage(1, skeleton.GetCenter(), audioService);
+            }
+        }
+    }
+    private void DealDamage(int damage, Vector2 damagePos, IAudioService audioService)
+    {
+        if(!_invincible)
+        {
+            _health -= damage;
+
+            // Set up knockback
+            _knockbackVector = damagePos - GetCenter();
+            _knockbackVector = Vector2.Normalize(_knockbackVector) * _knockbackDistance;
+
+            _invincibilityTimer = 0;
+            _invincible = true;
+            audioService.PlaySound(_damageSound);
+        }
+    }
+
+    private void HandleMovement(IKeyboardService keyboardService)
+    {
         List<SolidWall> allWalls = _currentScene.GetAllActors<SolidWall>("wall");
         
         // Loop through every wall in the scene to test collision against.
@@ -135,7 +190,24 @@ public class PlayerController : Actor
             _moveX = 0;
             _isMovingH = false;
         }
+    }
 
+    private void HandleInvincibility(IServiceFactory serviceFactory)
+    {
+        if (_invincible)
+        {
+            _invincibilityTimer += serviceFactory.GetVideoService().GetDeltaTime();
+        }
+
+        if (_invincibilityTimer >= _invincibleLength)
+        {
+            _invincibilityTimer = 0;
+            _invincible = false;
+        }
+    }
+
+    private void HandleAttack(IServiceFactory serviceFactory, IKeyboardService keyboardService)
+    {
         if (keyboardService.IsKeyDown(KeyboardKey.Space) && !_isAttacking && _attackTimer == 0 && _canAttack)
         {
             _isAttacking = true;
@@ -178,9 +250,6 @@ public class PlayerController : Actor
                 _attackTimer = 0;
             }
         }
-        
-        Steer(_moveX, _moveY);
-        Move();
     }
 
     public int IsMovingRight()

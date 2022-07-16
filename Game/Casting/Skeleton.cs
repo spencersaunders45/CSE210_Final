@@ -17,6 +17,7 @@ namespace CSE210_Final.Game.Casting
       private Image _image;
       private Scene _scene;
       private bool deathFirstFrame;
+      public bool aggro;
       
       // When damaged
       private Vector2 _knockbackVector;
@@ -39,6 +40,8 @@ namespace CSE210_Final.Game.Casting
          _startY = y;
          _scene = scene;
          _isBoss = isBoss;
+
+         aggro = false;
 
          _settingsService = serviceFactory.GetSettingsService();
          _audioService = serviceFactory.GetAudioService();
@@ -137,6 +140,7 @@ namespace CSE210_Final.Game.Casting
          MoveTo(_startX, _startY);
          _health = _startHealth;
          respawnTimer.Enabled = false;
+         aggro = false;
       }
 
    }

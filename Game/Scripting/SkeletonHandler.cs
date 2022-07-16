@@ -20,9 +20,9 @@ namespace CSE210_Final.Game.Scripting
          MoveTowardsPlayer(allSkeletons, player, scene);
       }
 
-      private void MoveTowardsPlayer(List<Skeleton> allSkeletons, Actor palyer, Scene scene)
+      private void MoveTowardsPlayer(List<Skeleton> allSkeletons, Actor player, Scene scene)
       {
-         Vector2 playerLocation = palyer.GetPosition();
+         Vector2 playerLocation = player.GetPosition();
          for(int i = 0; i < allSkeletons.Count; i++)
          {
             // Get the skeleton and it's current position
@@ -58,9 +58,15 @@ namespace CSE210_Final.Game.Scripting
             }
             
             currentSkeleton.SetKnockback(Vector2.Lerp(currentSkeleton.GetKnockback(), Vector2.Zero, 0.25f));
+
+            if (!currentSkeleton.aggro && Vector2.Distance(playerLocation, currentSkeleton.GetCenter()) < 176)
+               currentSkeleton.aggro = true;
             
             // Move the skeleton
-            currentSkeleton.Steer((targetDir - avoidDir) - currentSkeleton.GetKnockback());
+            if(currentSkeleton.aggro)
+               currentSkeleton.Steer((targetDir - avoidDir) - currentSkeleton.GetKnockback());
+            else
+               currentSkeleton.Steer(Vector2.Zero);
             currentSkeleton.Move();
          }
       }

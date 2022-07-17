@@ -1,7 +1,7 @@
 # CSE210_Final
--Description: Top down Zelda like game. Fight through skeletons while finding the boss skeleton.
--Required Software: RayLib C#
--Team: Spencer, Jacob, Eric, Gavin
+- Description: Top down Zelda like game. Fight through skeletons while finding the boss skeleton.
+- Required Software: RayLib C#
+- Team: Spencer, Jacob, Eric, Gavin
 -Project Structure:
    -Assets
       -Audio

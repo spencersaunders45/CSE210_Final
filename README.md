@@ -4,22 +4,22 @@
 - Team: Spencer, Jacob, Eric, Gavin
 - Project Structure:
    - Assets
-      -Audio
-        -Music
-        -SFX
-      -Images
-        -background
-        -Player
-        -Skeleton
-        -Slime
-        -SpriteSheets
-        -World-Tiles
-      -Sounds
-      -Tiled
-   -Game
-     -Casting
-     -Directing
-     -Scripting
-     -Services
-   -Constants.cs
-   -Program.cs
+    - Audio
+            - Music
+            - SFX
+    - Images
+            - background
+            - Player
+            - Skeleton
+            - Slime
+            - SpriteSheets
+            - World-Tiles
+     - Sounds
+     - Tiled
+   - Game
+         - Casting
+         - Directing
+         - Scripting
+         - Services
+   - Constants.cs
+   - Program.cs

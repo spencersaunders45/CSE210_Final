@@ -5,10 +5,10 @@
 - Project Structure:
    - Assets
     - Audio
-            - Music
+            -> Music
             - SFX
     - Images
-            - background
+            -> background
             - Player
             - Skeleton
             - Slime
@@ -17,7 +17,7 @@
      - Sounds
      - Tiled
    - Game
-         - Casting
+         -> Casting
          - Directing
          - Scripting
          - Services

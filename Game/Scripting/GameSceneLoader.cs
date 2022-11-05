@@ -16,6 +16,7 @@ public class GameSceneLoader : SceneLoader
 
     public override void Load(Scene scene)
     {
+        // Define Services
         IServiceFactory serviceFactory = GetServiceFactory();
         serviceFactory.GetVideoService().SetBackground(Color.Black());
 
@@ -65,6 +66,7 @@ public class GameSceneLoader : SceneLoader
         scene.AddAction(Phase.Output, drawSkeletonAction);
         scene.AddAction(Phase.Update, skeletonHandler);
     }
+
 
     private Image CreateTitleScreen()
     {

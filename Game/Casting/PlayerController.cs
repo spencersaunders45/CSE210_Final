@@ -166,9 +166,19 @@ public class PlayerController : Actor
         }
         
         // Vertical
-        if (keyboardService.IsKeyDown(KeyboardKey.Down) && !_botCol && !_isAttacking && !_isDead) // Down
+        if (keyboardService.IsKeyDown(KeyboardKey.Down) && !_botCol && !_isAttacking && !_isDead && keyboardService.IsKeyDown(KeyboardKey.R)) // Down Sprint
+        {
+            _moveY = _movementSpeed * 2;
+            _isMovingY = true;
+        }
+        else if (keyboardService.IsKeyDown(KeyboardKey.Down) && !_botCol && !_isAttacking && !_isDead) // Down
         {
             _moveY = _movementSpeed;
+            _isMovingY = true;
+        }
+        else if (keyboardService.IsKeyDown(KeyboardKey.Up) && !_topCol && !_isAttacking && !_isDead && keyboardService.IsKeyDown(KeyboardKey.R)) // Sprint up
+        {
+            _moveY = -_movementSpeed * 2;
             _isMovingY = true;
         }
         else if (keyboardService.IsKeyDown(KeyboardKey.Up) && !_topCol && !_isAttacking && !_isDead) // Up
@@ -183,11 +193,23 @@ public class PlayerController : Actor
         }
         
         // Horizontal Movement
-        if (keyboardService.IsKeyDown(KeyboardKey.Right) && !_rightCol && !_isAttacking && !_isDead) // Right
+        if (keyboardService.IsKeyDown(KeyboardKey.Right) && !_rightCol && !_isAttacking && !_isDead && keyboardService.IsKeyDown(KeyboardKey.R)) // Sprint Right
+        {
+            _moveX = _movementSpeed * 2;
+            _isMovingH = true;
+            _isMovingRight = 1;
+        }
+        else if (keyboardService.IsKeyDown(KeyboardKey.Right) && !_rightCol && !_isAttacking && !_isDead) // Right
         {
             _moveX = _movementSpeed;
             _isMovingH = true;
             _isMovingRight = 1;
+        }
+        else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !_leftCol && !_isAttacking && !_isDead && keyboardService.IsKeyDown(KeyboardKey.R)) // Sprint Left
+        {
+            _moveX = -_movementSpeed * 2;
+            _isMovingH = true;
+            _isMovingRight = -1;
         }
         else if (keyboardService.IsKeyDown(KeyboardKey.Left) && !_leftCol && !_isAttacking && !_isDead) // Left
         {
